@@ -1,6 +1,6 @@
 from typing import ( Any, List )
 
-from fastapi import FastAPI
+from fastapi import APIRouter, FastAPI
 
 from nest.common.interfaces import INestApplication
 from nest.common.decorators import Module # Change URL for typing?
@@ -31,7 +31,19 @@ class NestApplication(INestApplication):
 
     def _setupController(self, controllers: List[Any]) -> None:
         for controller in controllers:
-            print(controller)
+            router = APIRouter(
+                prefix=f'{controller().prefix}',
+                tags=controller().tags)
+            
+            for route in controller().routes:
+                router.add_api_route(
+                    path=route.path,
+                    endpoint=route.attr, 
+                    methods=route.methods
+                )
+
+            self.nest.include_router(router)
+
     
     def listen(self, host: str = '0.0.0.0', port: int = 3000) -> None:
         import uvicorn

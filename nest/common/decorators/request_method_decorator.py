@@ -25,7 +25,7 @@ def Put(path: str = '/',  **kwargs):
 
 def _http_verb(path: str, method: str, **kwargs):
     def decorator(fn: Callable):
-        route_info = Route(path, [method], **kwargs)
+        route_info = Route(path=path, methods=[method], **kwargs)
 
         setattr(fn, IS_ROUTE_KEY, True)
         setattr(fn, ROUTE_INFO_KEY, route_info)
