@@ -6,8 +6,8 @@ from users import UserModule
 @Module(
     imports=[UserModule],
     controllers=[AppController],
-    providers=['C'],
-    exports=['D']
+    providers=[],
+    exports=[]
 )
 class AppModule: 
     pass

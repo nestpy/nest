@@ -4,12 +4,19 @@ from fastapi import FastAPI
 
 from nest.common.interfaces import INestApplication
 from nest.common.decorators import Module # Change URL for typing?
+from nest.core import ApplicationConfig
 
 class NestApplication(INestApplication):
 
-    def __init__(self, appModule: Module):
+    def __init__(
+        self, 
+        appModule: Module, 
+        config: ApplicationConfig = ApplicationConfig()
+    ):
         self.nest = FastAPI()
         self.appModule = appModule()
+        self.config = config
+
 
     def _setup(self) -> None:
         self._setupModule()
