@@ -1,1 +1,1 @@
-from .nest_application_interface import INestAplication as INestAplication
+from .nest_application_interface import INestApplication as INestApplication

@@ -1,4 +1,7 @@
-from abc import ( ABC )
+from abc import ( ABC, abstractmethod )
 
-class INestAplication(ABC):
-    pass
+class INestApplication(ABC):
+
+    @abstractmethod
+    def listen(self, host: str = '0.0.0.0', port: int = 3000) -> None: pass  
+        

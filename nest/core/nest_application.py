@@ -1,4 +1,17 @@
-from nest.common.interfaces import INestAplication
+from fastapi import FastAPI
 
-class NestAplication(INestAplication):
-    pass
+from nest.common.interfaces import INestApplication
+
+
+class NestApplication(INestApplication):
+
+    def __init__(self):
+        self.nest = FastAPI()
+
+    def get_app(self) -> FastAPI:
+        return self.nest
+    
+    def listen(self, host: str = '0.0.0.0', port: int = 3000) -> None:
+        import uvicorn
+
+        uvicorn.run(self.nest, host=host, port=port)
