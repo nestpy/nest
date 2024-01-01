@@ -1,3 +1,5 @@
+from typing import ( Any, List )
+
 from fastapi import FastAPI
 
 from nest.common.interfaces import INestApplication
@@ -13,7 +15,16 @@ class NestApplication(INestApplication):
         self._setupModule()
     
     def _setupModule(self) -> None:
-        print(self.appModule)
+        controllers = self.appModule.controllers
+
+        for module in self.appModule.imports:
+            controllers.extend(module().controllers)
+
+        self._setupController(controllers)
+
+    def _setupController(self, controllers: List[Any]) -> None:
+        for controller in controllers:
+            print(controller)
     
     def listen(self, host: str = '0.0.0.0', port: int = 3000) -> None:
         import uvicorn

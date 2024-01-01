@@ -5,5 +5,6 @@ from typing import (
     Union,
 )
 
+
 SetIntStr = Set[Union[int, str]]
 DictIntStrAny = Dict[Union[int, str], Any]
