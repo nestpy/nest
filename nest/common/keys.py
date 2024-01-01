@@ -1,2 +1,2 @@
-IS_ROUTE_KEY = "is_route"
-ROUTE_INFO_KEY = "route_info"
+IS_ROUTE_KEY = "__is_route__"
+ROUTE_INFO_KEY = "__route_info__"

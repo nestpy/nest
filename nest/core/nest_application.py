@@ -37,9 +37,8 @@ class NestApplication(INestApplication):
             
             for route in controller().routes:
                 router.add_api_route(
-                    path=route.path,
-                    endpoint=route.attr, 
-                    methods=route.methods
+                    endpoint=route.endpoint, 
+                    **route.dict(exclude={'endpoint'})
                 )
 
             self.nest.include_router(router)

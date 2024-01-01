@@ -8,6 +8,7 @@ from pydantic import BaseModel
 from starlette.routing import Route as RouteBase
 from typing import (
     Any,
+    Callable,
     Dict,
     Optional,
     Sequence,
@@ -42,7 +43,7 @@ class Route(BaseModel):
     route_class_override: Optional[Type[APIRoute]] = None
     callbacks: Optional[List[RouteBase]] = None
     openapi_extra: Optional[Dict[str, Any]] = None
-    attr: Any = None
+    endpoint: Callable[..., Any] = None
 
     class Config:
         arbitrary_types_allowed = True

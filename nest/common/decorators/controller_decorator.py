@@ -28,11 +28,11 @@ class Controller:
                 routes = []
 
                 for attr_name in dir(ClassBasedView):
-                    attr = getattr(ClassBasedView, attr_name)
+                    endpoint = getattr(ClassBasedView, attr_name)
                     
-                    if callable(attr) and hasattr(attr, IS_ROUTE_KEY):
-                        route = getattr(attr, ROUTE_INFO_KEY)
-                        routes.append(route.copy(update={'attr': attr}))
+                    if callable(endpoint) and hasattr(endpoint, IS_ROUTE_KEY):
+                        route = getattr(endpoint, ROUTE_INFO_KEY)
+                        routes.append(route.copy(update={'endpoint': endpoint}))
 
                 return routes
 

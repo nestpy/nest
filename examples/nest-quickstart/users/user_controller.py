@@ -3,22 +3,22 @@ from nest.common.decorators import Controller, Get, Post, Put, Delete
 @Controller('/users')
 class UserController:
     
-    Get('/')
+    @Get('/')
     async def findAll() -> str:
         return {"Hello": "World"}
 
-    Get('/')
+    @Get('/{id}', deprecated=True)
     async def findById(id: str) -> str:
         return {"Hello": id}
 
-    Post('/')
+    @Post('/')
     async def create() -> str:
         return {"Hello": "World"}
 
-    Put('/')
+    @Put('/{id}')
     async def update(id: str) -> str:
         return {"Hello": id}
 
-    Delete('/')
+    @Delete('/{id}')
     async def delete(id: str) -> str:
         return {"Hello": id}
