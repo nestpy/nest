@@ -1,6 +1,7 @@
+from nest.common.enums import VersioningType
 from nest.common.decorators import Module # Change URL for typing?
 from nest.common.interfaces import INestApplication
-from nest.common.metadata import GlobalPrefixOptions
+from nest.common.metadata import GlobalPrefixOptions, VersioningOptions
 from nest.core import ApplicationConfig
 
 from fastapi import APIRouter, FastAPI
@@ -24,11 +25,17 @@ class NestApplication(INestApplication):
 
 
     def _setConfig(self) -> None:
-        value: ApplicationConfig = ApplicationConfig()
+        globalPrefix = self.config.globalPrefix
+        versioning = self.config.versioning
 
-        if type(value.globalPrefix == bool):
-            value.globalPrefix = GlobalPrefixOptions(
-                prefix= '/api' if value.globalPrefix else ''
+        if type(globalPrefix == bool):
+            globalPrefix = GlobalPrefixOptions(
+                prefix='/api' if globalPrefix else ''
+            )
+
+        if type(versioning == bool):
+            versioning = VersioningOptions(
+                type=VersioningType.URI if versioning else VersioningType.NONE
             )
 
     def _setup(self) -> None:
@@ -46,17 +53,28 @@ class NestApplication(INestApplication):
         globalPrefix = self.config.globalPrefix.prefix
         for controller in controllers:
             router = APIRouter(
-                prefix=f'{globalPrefix}{controller().prefix}',
+                prefix=f'{globalPrefix}',
                 tags=controller().tags)
             
             for route in controller().routes:
                 router.add_api_route(
+                    path=self._generatePrefix(f'{controller().prefix}{route.path}'),
                     endpoint=route.endpoint, 
-                    **route.dict(exclude={'endpoint'})
+                    **route.dict(exclude={'endpoint', 'path'})
                 )
 
             self.nest.include_router(router)
-    
+
+    def _generatePrefix(self, path: str):
+        versioning = self.config.versioning
+        if versioning.type == VersioningType.URI:
+            return f'/v{versioning.defaultVersioning}{path}'
+        
+        return f'{path}'
+
+    def enableVersioning(self, type: VersioningType, defaultVersioning: str = '1'):
+        self.config.versioning = VersioningOptions(type=type, defaultVersioning=defaultVersioning)
+
     def listen(self, host: str = '0.0.0.0', port: int = 3000) -> None:
         import uvicorn
         
