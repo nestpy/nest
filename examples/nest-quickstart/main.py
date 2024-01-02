@@ -5,6 +5,8 @@ from app_module import AppModule
 def bootstrap():
     app = NestApplication( AppModule )
 
+    app.setGlobalPrefix('/api')
+
     app.listen()
 
 if __name__ == "__main__":
