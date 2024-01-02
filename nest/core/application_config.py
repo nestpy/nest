@@ -1,4 +1,5 @@
 from nest.common.metadata import GlobalPrefixOptions
+from nest.common.metadata import VersioningOptions
 
 class SingletonMeta(type):
     _instances = {}
@@ -10,6 +11,6 @@ class SingletonMeta(type):
         return cls._instances[cls]
 
 class ApplicationConfig(metaclass=SingletonMeta):
-    def __init__(self):
-        self.globalPrefix: bool | GlobalPrefixOptions = False
-        self.versioning: bool = False
+    def __init__(self, globalPrefix: bool = False, versioning: bool = False):
+        self.globalPrefix: bool | GlobalPrefixOptions = globalPrefix
+        self.versioning: bool | VersioningOptions = versioning
