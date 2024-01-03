@@ -21,7 +21,6 @@ class NestApplication(INestApplication):
         self.config = config
 
         self._setConfig()
-        print(config.globalPrefix)
 
 
     def _setConfig(self) -> None:
