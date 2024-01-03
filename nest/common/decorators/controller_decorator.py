@@ -1,5 +1,5 @@
 from typing import ( List, Optional )
-from nest.common.keys import IS_ROUTE_KEY, ROUTE_INFO_KEY
+from nest.common.keys import IS_ROUTE_KEY, ROUTE_HTTP_CODE_KEY, ROUTE_INFO_KEY
 from nest.common.metadata import Route
 
 class Controller:
@@ -32,7 +32,15 @@ class Controller:
                     
                     if callable(endpoint) and hasattr(endpoint, IS_ROUTE_KEY):
                         route = getattr(endpoint, ROUTE_INFO_KEY)
-                        routes.append(route.copy(update={'endpoint': endpoint}))
+                        status_code = getattr(endpoint, ROUTE_HTTP_CODE_KEY, route.status_code)
+                        routes.append(
+                            route.copy(
+                                update={
+                                    'endpoint': endpoint,
+                                    'status_code': status_code
+                                }
+                            )
+                        )
 
                 return routes
 
