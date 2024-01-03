@@ -18,14 +18,20 @@ def Path(path: str = '/',  **kwargs):
     return _http_verb(path, 'PATH', **kwargs)
 
 def Post(path: str = '/',  **kwargs):
-    return _http_verb(path, 'POST', **kwargs)
+    return _http_verb(path, 'POST', 201, **kwargs)
 
 def Put(path: str = '/',  **kwargs):
     return _http_verb(path, 'PUT', **kwargs)
 
-def _http_verb(path: str, method: str, **kwargs):
+def _http_verb(path: str, method: str, status_code: int = 200, **kwargs):
     def decorator(fn: Callable):
-        route_info = Route(path=path, methods=[method], **kwargs)
+
+        route_info = Route(
+            path=path, 
+            methods=[method],
+            status_code=status_code, 
+            **kwargs
+        )
 
         setattr(fn, IS_ROUTE_KEY, True)
         setattr(fn, ROUTE_INFO_KEY, route_info)
