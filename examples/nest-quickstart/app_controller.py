@@ -2,8 +2,11 @@ from nest.common.decorators import Controller, Get, HttpCode
 
 @Controller('/')
 class AppController:
-    
+
+    def __init__(self):
+        pass
+
     @Get('/')
     @HttpCode(202)
-    async def findAll(self):
+    def findAll(self):
         return {"Hello": "World"}

@@ -55,7 +55,10 @@ class NestApplication(INestApplication):
                 prefix=f'{globalPrefix}',
                 tags=controller().tags)
             
+            
             for route in controller().routes:
+                controller()._fix_endpoint_signature(controller, route.endpoint)
+                
                 router.add_api_route(
                     path=self._generatePrefix(f'{controller().prefix}{route.path}'),
                     endpoint=route.endpoint, 

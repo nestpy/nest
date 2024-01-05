@@ -1,7 +1,9 @@
+from kink import inject
 from typing import List
 
 from .user_dto import User
 
+@inject
 class UserRepository:
     def __init__(self):
         self.users = [ User(id='1', username='Manuel S. Lemos', email='mslemos@nespy.com')]
