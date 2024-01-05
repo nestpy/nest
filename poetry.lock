@@ -162,6 +162,20 @@ files = [
 ]
 
 [[package]]
+name = "kink"
+version = "0.7.0"
+description = "Dependency injection for python."
+optional = false
+python-versions = ">=3.7,<4.0"
+files = [
+    {file = "kink-0.7.0-py3-none-any.whl", hash = "sha256:661746babd0c1ee4cf576b9133acba0d620007ff40a37860afc4d13abdacadcd"},
+    {file = "kink-0.7.0.tar.gz", hash = "sha256:cea9e263b74d3f19131070a7e5a7076ba98f552eaeab67655c983f7b4cc15380"},
+]
+
+[package.dependencies]
+typing_extensions = ">=4.1.1,<5.0.0"
+
+[[package]]
 name = "pydantic"
 version = "2.5.3"
 description = "Data validation using Python type hints"
@@ -650,4 +664,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "a5a540aa846224c44cb4ddb86cc5b14d270763d256db63e5a9d7b2c94de03469"
+content-hash = "70749711d7351c5cb8ffd9709fd7db276fd95fb4f09bad456f71f7d21f16518d"
