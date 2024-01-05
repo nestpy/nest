@@ -9,7 +9,6 @@ from .user_dto import User
 
 @Controller('/users')
 class UserController:
-    @inject
     def __init__(self, user_service: UserService):
         self.user_service = user_service
     

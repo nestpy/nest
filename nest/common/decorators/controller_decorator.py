@@ -6,12 +6,18 @@ from nest.core.injector.dependency_injection import factory
 from inspect import Parameter, signature
 from fastapi.params import Depends
 
+from kink import inject
+
 class Controller:
     def __init__( self, prefix: str = '/'): 
         self.prefix = prefix
     
     def __call__(decorator, ClassBasedView):
-        class IController(ClassBasedView):
+
+        wrapper = inject()
+        cls = wrapper(ClassBasedView)
+
+        class IController(cls):
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
                 self.prefix = self.set_prefix(decorator.prefix)
