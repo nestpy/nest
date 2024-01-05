@@ -4,21 +4,21 @@ from nest.common.decorators import Controller, Get, Post, Put, Delete
 class UserController:
     
     @Get('/')
-    async def findAll() -> str:
+    async def findAll(self) -> str:
         return {"Hello": "World"}
 
     @Get('/{id}', deprecated=True)
-    async def findById(id: str) -> str:
+    async def findById(self, id: str) -> str:
         return {"Hello": id}
 
     @Post('/')
-    async def create() -> str:
+    async def create(self) -> str:
         return {"Hello": "World"}
 
     @Put('/{id}')
-    async def update(id: str) -> str:
+    async def update(self, id: str) -> str:
         return {"Hello": id}
 
     @Delete('/{id}')
-    async def delete(id: str) -> str:
+    async def delete(self, id: str) -> str:
         return {"Hello": id}

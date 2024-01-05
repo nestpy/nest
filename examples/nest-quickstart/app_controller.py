@@ -5,5 +5,5 @@ class AppController:
     
     @Get('/')
     @HttpCode(202)
-    async def findAll():
+    async def findAll(self):
         return {"Hello": "World"}
