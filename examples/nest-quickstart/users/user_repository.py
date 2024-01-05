@@ -1,9 +1,9 @@
-from kink import inject
+from nest.common.decorators.core.injectable_decorator import Injectable
 from typing import List
 
 from .user_dto import User
 
-@inject
+@Injectable()
 class UserRepository:
     def __init__(self):
         self.users = [ User(id='1', username='Manuel S. Lemos', email='mslemos@nespy.com')]
