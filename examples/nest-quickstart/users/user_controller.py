@@ -1,7 +1,7 @@
 from kink import inject
 from typing import List
 
-from nest.common.decorators import Controller, Get, Post, Put, Delete
+from nest.common import Controller, Get, Post, Put, Delete
 
 from users.user_service  import UserService
 from .user_dto import User

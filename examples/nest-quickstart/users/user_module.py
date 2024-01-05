@@ -1,4 +1,4 @@
-from nest.common.decorators import Module
+from nest.common import Module
 
 from users.user_controller import UserController
 from users.user_service import UserService

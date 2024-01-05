@@ -1,4 +1,4 @@
-from nest.common.decorators.core.injectable_decorator import Injectable
+from nest.common import Injectable
 from typing import List
 
 from .user_dto import User

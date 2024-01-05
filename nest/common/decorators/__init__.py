@@ -1,4 +1,5 @@
 from .controller_decorator import Controller as Controller
+from .core import Injectable as Injectable
 from .http_code_decorator import HttpCode as HttpCode
 from .module_decorator import Module as Module
 from .request_method_decorator import Delete as Delete
