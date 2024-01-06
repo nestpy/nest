@@ -9,4 +9,3 @@ from .request_method_decorator import Options as Options
 from .request_method_decorator import Path as Path
 from .request_method_decorator import Post as Post
 from .request_method_decorator import Put as Put
-

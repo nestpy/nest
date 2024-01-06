@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class HttpStatus(Enum):
     CONTINUE = 100
     SWITCHING_PROTOCOLS = 101

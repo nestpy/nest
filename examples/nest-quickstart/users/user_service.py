@@ -5,9 +5,9 @@ from typing import List
 from .user_repository import UserRepository
 from .user_dto import User
 
+
 @Injectable()
 class UserService:
-
     def __init__(self, user_repository: UserRepository):
         self.user_repository = user_repository
 
