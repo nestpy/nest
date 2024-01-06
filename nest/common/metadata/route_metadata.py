@@ -4,7 +4,7 @@ from fastapi.routing import APIRoute
 from fastapi.responses import JSONResponse
 
 from nest.common.typing import SetIntStr, DictIntStrAny
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from starlette.routing import Route as RouteBase
 from typing import (
     Any,
@@ -20,6 +20,8 @@ from typing import (
 
 
 class Route(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
     path: str
     response_model: Optional[Type[Any]] = None
     status_code: Optional[int] = None
@@ -48,6 +50,3 @@ class Route(BaseModel):
     callbacks: Optional[List[RouteBase]] = None
     openapi_extra: Optional[Dict[str, Any]] = None
     endpoint: Optional[Callable[..., Any]] = None
-
-    class Config:
-        arbitrary_types_allowed = True
