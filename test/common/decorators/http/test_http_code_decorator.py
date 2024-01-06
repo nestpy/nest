@@ -26,3 +26,5 @@ class TestHttpCode:
 
         message = f"Value {status} is not a part of {HttpStatus.__name__}"
         assert str(exception.value) == message
+
+    def test_ShouldAssinsStatusCodeToFunction_UsingEnumParam(self): pass
