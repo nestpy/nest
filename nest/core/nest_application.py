@@ -9,7 +9,11 @@ from typing import Any, List
 
 
 class NestApplication(INestApplication):
-    def __init__(self, appModule: Any, config: ApplicationConfig = ApplicationConfig()):
+    def __init__(
+        self,
+        appModule: Any,
+        config: ApplicationConfig = ApplicationConfig()
+    ):
         self.nest = FastAPI()
         self.appModule = appModule()
         self.config = config
@@ -21,7 +25,9 @@ class NestApplication(INestApplication):
         versioning = self.config.versioning
 
         if type(globalPrefix == bool):
-            globalPrefix = GlobalPrefixOptions(prefix="/api" if globalPrefix else "")
+            globalPrefix = GlobalPrefixOptions(
+                prefix="/api" if globalPrefix else ""
+            )
 
         if type(versioning == bool):
             versioning = VersioningOptions(
@@ -46,13 +52,21 @@ class NestApplication(INestApplication):
         globalPrefix = self.config.globalPrefix.prefix
 
         for controller in controllers:
-            router = APIRouter(prefix=f"{globalPrefix}", tags=controller().tags)
+            router = APIRouter(
+                prefix=f"{globalPrefix}",
+                tags=controller().tags
+            )
 
             for route in controller().routes:
-                controller()._fix_endpoint_signature(controller, route.endpoint)
+                controller()._fix_endpoint_signature(
+                    controller,
+                    route.endpoint
+                )
 
                 router.add_api_route(
-                    path=self._generatePrefix(f"{controller().prefix}{route.path}"),
+                    path=self._generatePrefix(
+                        f"{controller().prefix}{route.path}"
+                    ),
                     endpoint=route.endpoint,
                     **route.dict(exclude={"endpoint", "path"}),
                 )
@@ -70,7 +84,11 @@ class NestApplication(INestApplication):
 
         return f"{path}"
 
-    def enableVersioning(self, type: VersioningType, defaultVersioning: str = "1"):
+    def enableVersioning(
+        self,
+        type: VersioningType,
+        defaultVersioning: str = "1"
+    ):
         self.config.versioning = VersioningOptions(
             type=type, defaultVersioning=defaultVersioning
         )
@@ -82,4 +100,7 @@ class NestApplication(INestApplication):
         uvicorn.run(self.nest, host=host, port=port)
 
     def setGlobalPrefix(self, prefix: str, exclude: List[str] = []) -> None:
-        self.config.globalPrefix = GlobalPrefixOptions(prefix=prefix, exclude=exclude)
+        self.config.globalPrefix = GlobalPrefixOptions(
+            prefix=prefix,
+            exclude=exclude
+        )

@@ -26,4 +26,12 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.flake8]
-exclude = [".git", "__pycache__", "docs/source/conf.py", "old", "build", "dist"]
+exclude = [
+    ".git",
+    "__pycache__",
+    "docs/source/conf.py",
+    "old",
+    "build",
+    "dist",
+    "__init__.py"
+]

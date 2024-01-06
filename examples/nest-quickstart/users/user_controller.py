@@ -1,4 +1,3 @@
-from kink import inject
 from typing import List
 
 from nest.common import Controller, Get, Post, Put, Delete

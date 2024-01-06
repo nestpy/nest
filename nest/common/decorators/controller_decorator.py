@@ -78,7 +78,9 @@ class Controller:
                     for parameter in old_parameters[1:]
                 ]
 
-                new_signature = old_signature.replace(parameters=new_parameters)
+                new_signature = old_signature.replace(
+                    parameters=new_parameters
+                )
 
                 setattr(endpoint, "__signature__", new_signature)
 

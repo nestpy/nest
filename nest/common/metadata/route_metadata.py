@@ -39,7 +39,10 @@ class Route(BaseModel):
     response_model_exclude_defaults: bool = False
     response_model_exclude_none: bool = False
     include_in_schema: bool = True
-    response_class: Union[Type[Response], DefaultPlaceholder] = Default(JSONResponse)
+    response_class: Union[
+        Type[Response],
+        DefaultPlaceholder
+    ] = Default(JSONResponse)
     name: Optional[str] = None
     route_class_override: Optional[Type[APIRoute]] = None
     callbacks: Optional[List[RouteBase]] = None
