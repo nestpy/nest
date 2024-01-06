@@ -9,7 +9,7 @@ from fastapi.params import Depends
 from kink import inject
 
 class Controller:
-    def __init__( self, prefix: str = '/'): 
+    def __init__( self, prefix: str = '/') -> None: 
         self.prefix = prefix
     
     def __call__(decorator, ClassBasedView):

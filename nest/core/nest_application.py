@@ -1,5 +1,4 @@
 from nest.common.enums import VersioningType
-from nest.common.decorators import Module # Change URL for typing?
 from nest.common.interfaces import INestApplication
 from nest.common.metadata import GlobalPrefixOptions, VersioningOptions
 from nest.core import ApplicationConfig
@@ -13,7 +12,7 @@ class NestApplication(INestApplication):
 
     def __init__(
         self, 
-        appModule: Module, 
+        appModule: Any, 
         config: ApplicationConfig = ApplicationConfig()
     ):
         self.nest = FastAPI()
@@ -49,7 +48,12 @@ class NestApplication(INestApplication):
         self._setupController(controllers)
 
     def _setupController(self, controllers: List[Any]) -> None:
+        
+        if not isinstance(self.config.globalPrefix, GlobalPrefixOptions):
+            raise ValueError('TODO')
+        
         globalPrefix = self.config.globalPrefix.prefix
+
         for controller in controllers:
             router = APIRouter(
                 prefix=f'{globalPrefix}',
@@ -68,7 +72,12 @@ class NestApplication(INestApplication):
             self.nest.include_router(router)
 
     def _generatePrefix(self, path: str):
+
+        if not isinstance(self.config.versioning, VersioningOptions):
+            raise ValueError('TODO')
+        
         versioning = self.config.versioning
+
         if versioning.type == VersioningType.URI:
             return f'/v{versioning.defaultVersioning}{path}'
         

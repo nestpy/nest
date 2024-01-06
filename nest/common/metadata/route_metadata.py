@@ -43,7 +43,7 @@ class Route(BaseModel):
     route_class_override: Optional[Type[APIRoute]] = None
     callbacks: Optional[List[RouteBase]] = None
     openapi_extra: Optional[Dict[str, Any]] = None
-    endpoint: Callable[..., Any] = None
+    endpoint: Optional[Callable[..., Any]] = None
 
     class Config:
         arbitrary_types_allowed = True

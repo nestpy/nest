@@ -1,8 +1,10 @@
 from nest.common.metadata import GlobalPrefixOptions
 from nest.common.metadata import VersioningOptions
 
+from typing import Any, Dict
+
 class SingletonMeta(type):
-    _instances = {}
+    _instances: Dict[Any, Any] = {}
 
     def __call__(cls, *args, **kwargs):
         if cls not in cls._instances:

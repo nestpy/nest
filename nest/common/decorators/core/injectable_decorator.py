@@ -1,10 +1,8 @@
 from kink import inject
 
-from typing import ( Type, TypeVar )
-
-T = TypeVar("T")
+from typing import ( Any, Callable )
 
 def Injectable():
-    def decorator(cls: Type[T]) -> Type[T]:
+    def decorator(cls: Callable[..., Any]) -> Callable[..., Any]:
         return inject(cls)
     return decorator
