@@ -3,6 +3,7 @@ from nest.common.metadata import VersioningOptions
 
 from typing import Any, Dict
 
+
 class SingletonMeta(type):
     _instances: Dict[Any, Any] = {}
 
@@ -11,6 +12,7 @@ class SingletonMeta(type):
             instance = super().__call__(*args, **kwargs)
             cls._instances[cls] = instance
         return cls._instances[cls]
+
 
 class ApplicationConfig(metaclass=SingletonMeta):
     def __init__(self, globalPrefix: bool = False, versioning: bool = False):

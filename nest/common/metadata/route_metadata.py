@@ -18,6 +18,7 @@ from typing import (
     List,
 )
 
+
 class Route(BaseModel):
     path: str
     response_model: Optional[Type[Any]] = None

@@ -1,15 +1,17 @@
-from nest.common.decorators import Controller # Change for typing
-from typing import ( Any, List, TypeVar )
+from nest.common.decorators import Controller  # Change for typing
+from typing import Any, List, TypeVar
+
 
 TModule = TypeVar("TModule", bound="Module")
+
 
 class Module:
     def __init__(
         self,
-        imports: List[TModule] = [], 
+        imports: List[TModule] = [],
         controllers: List[Controller] = [],
-        providers: List[Any] = [], 
-        exports: List[TModule] = []
+        providers: List[Any] = [],
+        exports: List[TModule] = [],
     ):
         self.imports = imports
         self.controllers = controllers
@@ -25,6 +27,6 @@ class Module:
                 self.controllers = decorator.controllers
                 self.providers = decorator.providers
                 self.exports = decorator.exports
-        
+
         IModule.decorator = decorator
         return IModule

@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class VersioningType(Enum):
     NONE = 0
     URI = 1
