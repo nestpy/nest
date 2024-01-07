@@ -7,6 +7,9 @@ authors = ["Manuel S. Lemos <iam@manuelslemos.es>"]
 license = "MIT"
 packages = [{include = "nest"}]
 
+[tool.poetry.scripts]
+start = ''
+
 [tool.poetry.dependencies]
 python = "^3.10"
 fastapi = "0.105.0"

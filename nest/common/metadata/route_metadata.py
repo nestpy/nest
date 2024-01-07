@@ -19,6 +19,8 @@ from typing import (
 )
 
 class OpenapiArgs(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+    
     description: Optional[str] = None
     include_in_schema: bool = True
     openapi_extra: Optional[Dict[str, Any]] = None
@@ -29,6 +31,8 @@ class OpenapiArgs(BaseModel):
 
 
 class RouteArgs(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
     path: str
     status_code: Optional[int] = None
     methods: Optional[Union[Set[str], List[str]]] = None
