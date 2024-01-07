@@ -83,3 +83,4 @@ class Route(BaseModel):
     callbacks: Optional[List[RouteBase]] = None
     openapi_extra: Optional[Dict[str, Any]] = None
     endpoint: Optional[Callable[..., Any]] = None
+    version: Optional[str] = None
