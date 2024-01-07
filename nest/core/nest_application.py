@@ -65,22 +65,29 @@ class NestApplication(INestApplication):
 
                 router.add_api_route(
                     path=self._generatePrefix(
-                        f"{controller().prefix}{route.path}"
+                        f"{controller().prefix}{route.path}",
+                        route.version
                     ),
                     endpoint=route.endpoint,
-                    **route.dict(exclude={"endpoint", "path"}),
+                    **route.dict(exclude={
+                        "endpoint", 
+                        "path", 
+                        "version"
+                    }),
                 )
 
             self.nest.include_router(router)
 
-    def _generatePrefix(self, path: str):
+    def _generatePrefix(self, path: str, version: str):
         if not isinstance(self.config.versioning, VersioningOptions):
             raise ValueError("TODO")
 
         versioning = self.config.versioning
 
         if versioning.type == VersioningType.URI:
-            return f"/v{versioning.defaultVersioning}{path}"
+            default = versioning.defaultVersioning
+            version = default if version is None else version
+            return f"/v{version}{path}"
 
         return f"{path}"
 
