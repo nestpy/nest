@@ -12,11 +12,11 @@ class NestApplication(INestApplication):
     def __init__(
         self,
         appModule: Any,
-        config: ApplicationConfig = ApplicationConfig()
+        config: ApplicationConfig
     ):
         self.nest = FastAPI()
         self.appModule = appModule()
-        self.config = config
+        self.config = config # TODO: Change to private readonly
 
         self._setConfig()
 

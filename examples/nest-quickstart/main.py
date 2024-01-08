@@ -1,11 +1,11 @@
-from nest.core import NestApplication
+from nest.core import NestFactory
 from nest.common import VersioningType
 
 from app_module import AppModule
 
 
 def bootstrap():
-    app = NestApplication(AppModule)
+    app = NestFactory.create(AppModule)
 
     app.setGlobalPrefix("/api")
 
