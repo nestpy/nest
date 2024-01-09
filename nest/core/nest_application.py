@@ -27,7 +27,7 @@ class NestApplication(INestApplication):
         versioning = self.config.versioning
 
         if type(cors == bool) and cors:
-            cors = CorsOptions()
+            self.config.cors = CorsOptions()
 
         if type(globalPrefix == bool):
             globalPrefix = GlobalPrefixOptions(
