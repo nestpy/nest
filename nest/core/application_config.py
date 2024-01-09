@@ -1,5 +1,4 @@
-from nest.common.metadata import GlobalPrefixOptions
-from nest.common.metadata import VersioningOptions
+from nest.common.metadata import CorsOptions, GlobalPrefixOptions, VersioningOptions
 
 from typing import Any, Dict
 
@@ -15,6 +14,13 @@ class SingletonMeta(type):
 
 
 class ApplicationConfig(metaclass=SingletonMeta):
-    def __init__(self, globalPrefix: bool = False, versioning: bool = False):
+    def __init__(
+        self,
+        cors: bool = False,
+        globalPrefix: bool = False,
+        versioning: bool = False
+    ):
+        self.cors: bool | CorsOptions = cors
         self.globalPrefix: bool | GlobalPrefixOptions = globalPrefix
         self.versioning: bool | VersioningOptions = versioning
+
