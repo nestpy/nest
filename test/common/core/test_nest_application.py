@@ -17,3 +17,16 @@ class TestNestApplication:
         assert app.config.globalPrefix == False
         assert app.config.versioning == False
 
+    def test_ShouldConfigOptions_WhenInstanceWithCorsTrue(self):
+        @Module()
+        class app_module: 
+            pass
+
+        config_expect = CorsOptions()
+
+        config = ApplicationConfig(cors=True)
+        app = NestApplication(app_module, config)
+
+        print(app.config.cors)
+
+        assert config_expect.__eq__(app.config.cors) 
