@@ -1,9 +1,10 @@
 from nest.common.enums import VersioningType
 from nest.common.interfaces import INestApplication
-from nest.common.metadata import GlobalPrefixOptions, VersioningOptions
+from nest.common.metadata import CorsOptions, GlobalPrefixOptions, VersioningOptions
 from nest.core import ApplicationConfig
 
 from fastapi import APIRouter, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from typing import Any, List
 
@@ -21,8 +22,12 @@ class NestApplication(INestApplication):
         self._setConfig()
 
     def _setConfig(self) -> None:
+        cors = self.config.cors
         globalPrefix = self.config.globalPrefix
         versioning = self.config.versioning
+
+        if type(cors == bool) and cors:
+            cors = CorsOptions()
 
         if type(globalPrefix == bool):
             globalPrefix = GlobalPrefixOptions(
@@ -35,7 +40,23 @@ class NestApplication(INestApplication):
             )
 
     def _setup(self) -> None:
+        self._setupCors()
         self._setupModule()
+
+    def _setupCors(self) -> None:
+        cors = self.config.cors
+
+        if not cors: return
+
+        self.nest.add_middleware(
+            CORSMiddleware,
+            allow_credentials=cors.credentials,
+            expose_headers=cors.exposedHeaders,
+            allow_headers=cors.allowedHeaders,
+            allow_origins=cors.origins,
+            allow_methods=cors.methods,
+            max_age=cors.maxAge
+        )
 
     def _setupModule(self) -> None:
         controllers = self.appModule.controllers
@@ -90,6 +111,9 @@ class NestApplication(INestApplication):
             return f"/v{version}{path}"
 
         return f"{path}"
+
+    def enableCors(self, options: CorsOptions) -> None:
+        self.config.cors = options
 
     def enableVersioning(
         self,
