@@ -1,20 +1,14 @@
-from nest.common.metadata import GlobalPrefixOptions
-from nest.common.metadata import VersioningOptions
-
-from typing import Any, Dict
+from nest.common.metadata import CorsOptions, GlobalPrefixOptions, VersioningOptions
 
 
-class SingletonMeta(type):
-    _instances: Dict[Any, Any] = {}
-
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            instance = super().__call__(*args, **kwargs)
-            cls._instances[cls] = instance
-        return cls._instances[cls]
-
-
-class ApplicationConfig(metaclass=SingletonMeta):
-    def __init__(self, globalPrefix: bool = False, versioning: bool = False):
+class ApplicationConfig():
+    def __init__(
+        self,
+        cors: bool = False,
+        globalPrefix: bool = False,
+        versioning: bool = False
+    ):
+        self.cors: bool | CorsOptions = cors
         self.globalPrefix: bool | GlobalPrefixOptions = globalPrefix
         self.versioning: bool | VersioningOptions = versioning
+
