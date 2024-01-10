@@ -1,6 +1,6 @@
-from nest.common.enums import VersioningType
+from nest.common.enums import DocsType, VersioningType
 from nest.common.interfaces import INestApplication
-from nest.common.metadata import CorsOptions, GlobalPrefixOptions, VersioningOptions
+from nest.common.metadata import CorsOptions, DocsOptions, GlobalPrefixOptions, VersioningOptions
 from nest.core import ApplicationConfig
 
 from fastapi import APIRouter, FastAPI
@@ -15,7 +15,7 @@ class NestApplication(INestApplication):
         appModule: Any,
         config: ApplicationConfig
     ):
-        self.nest = FastAPI()
+        self.nest = None
         self.appModule = appModule()
         self.config = config # TODO: Change to private readonly
 
@@ -23,11 +23,16 @@ class NestApplication(INestApplication):
 
     def _setConfig(self) -> None:
         cors = self.config.cors
+        docs = self.config.docs
         globalPrefix = self.config.globalPrefix
         versioning = self.config.versioning
 
         if type(cors == bool) and cors:
             self.config.cors = CorsOptions()
+
+        if type(docs == bool) and docs:
+            print(docs)
+            self.config.docs = DocsOptions(type=DocsType.SWAGGER)
 
         if type(globalPrefix == bool):
             globalPrefix = GlobalPrefixOptions(
@@ -40,6 +45,7 @@ class NestApplication(INestApplication):
             )
 
     def _setup(self) -> None:
+        self._setupDocs()
         self._setupCors()
         self._setupModule()
 
@@ -56,6 +62,27 @@ class NestApplication(INestApplication):
             allow_origins=cors.origins,
             allow_methods=cors.methods,
             max_age=cors.maxAge
+        )
+
+    def _setupDocs(self) -> None:
+        docs = self.config.docs
+
+        if not docs: 
+            self.nest = FastAPI(docs_url=None, redoc_url=None)
+            return
+
+        self.nest = FastAPI(
+            docs_url= docs.swagger_url if docs.type == DocsType.SWAGGER else None,
+            redoc_url= docs.redoc_url if docs.type == DocsType.REDOC else None,
+            title=docs.title,
+            description=docs.description,
+            summary=docs.summary,
+            version=docs.version,
+            terms_of_service=docs.terms_of_service,
+            contact=docs.contact,
+            license_info=docs.license_info,
+            openapi_tags=docs.openapi_tags,
+            openapi_url=docs.openapi_url
         )
 
     def _setupModule(self) -> None:
@@ -114,6 +141,9 @@ class NestApplication(INestApplication):
 
     def enableCors(self, options: CorsOptions) -> None:
         self.config.cors = options
+
+    def enableDocs(self, type: DocsType, options: DocsOptions = DocsOptions()) -> None:
+        self.config.docs = options.copy(update={ "type": type })
 
     def enableVersioning(
         self,
