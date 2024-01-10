@@ -1,9 +1,9 @@
 from nest.core import NestFactory
-from nest.common import VersioningType
+from nest.common import DocsType, VersioningType
 
 from app_module import AppModule
 
-from nest.common.metadata import CorsOptions
+from nest.common.metadata import CorsOptions, DocsOptions
 
 def bootstrap():
     app = NestFactory.create(AppModule)
@@ -19,6 +19,8 @@ def bootstrap():
             allow_methods=['GET']
         ) 
     )
+
+    app.enableDocs(type=DocsType.SWAGGER)
 
     app.listen()
 
