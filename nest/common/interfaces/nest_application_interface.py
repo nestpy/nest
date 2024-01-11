@@ -1,16 +1,16 @@
 from abc import ABC, abstractmethod
-from nest.common.enums import VersioningType
+from nest.common.enums import DocsType, VersioningType
 from nest.common.metadata import CorsOptions, DocsOptions
 from typing import List
 
 
 class INestApplication(ABC):
     @abstractmethod
-    def enableCors(self, options: CorsOptions = CorsOptions()) -> None:
+    def enableCors(self, options: CorsOptions) -> None:
         pass
 
     @abstractmethod
-    def enableDocs(self, options: DocsOptions = DocsOptions()) -> None:
+    def enableDocs(self, type: DocsType, options: DocsOptions) -> None:
         pass
 
     @abstractmethod

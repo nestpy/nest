@@ -16,7 +16,7 @@ from typing import Any, List
 
 class NestApplication(INestApplication):
     def __init__(self, appModule: Any, config: ApplicationConfig):
-        self.nest = None
+        self.nest = FastAPI()
         self.appModule = appModule()
         self.config = config  # TODO: Change to private readonly
 
@@ -55,6 +55,9 @@ class NestApplication(INestApplication):
 
         if not cors:
             return
+        
+        if not isinstance(cors, CorsOptions):
+            return
 
         self.nest.add_middleware(
             CORSMiddleware,
@@ -71,6 +74,9 @@ class NestApplication(INestApplication):
 
         if not docs:
             self.nest = FastAPI(docs_url=None, redoc_url=None)
+            return
+        
+        if not isinstance(docs, DocsOptions):
             return
 
         docs_url = docs.swagger_url if docs.type == DocsType.SWAGGER else None

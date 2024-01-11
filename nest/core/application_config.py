@@ -5,6 +5,8 @@ from nest.common.metadata import (
     VersioningOptions,
 )
 
+from typing import Union, Literal
+
 
 class ApplicationConfig:
     def __init__(
@@ -14,7 +16,7 @@ class ApplicationConfig:
         globalPrefix: bool = False,
         versioning: bool = False,
     ):
-        self.cors: bool | CorsOptions = cors
-        self.docs: bool | DocsOptions = docs
+        self.cors: Union[bool, CorsOptions] = cors
+        self.docs: Union[bool, DocsOptions] = docs
         self.globalPrefix: bool | GlobalPrefixOptions = globalPrefix
         self.versioning: bool | VersioningOptions = versioning
