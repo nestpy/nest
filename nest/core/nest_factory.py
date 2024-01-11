@@ -2,14 +2,11 @@ from nest.core import NestApplication, ApplicationConfig
 from typing import Any, Optional
 
 
-
 class NestFactoryStatic:
-
     def __init___(self):
         pass
-    
+
     def create(self, module: Any, options: Optional[dict] = None) -> NestApplication:
-        
         applicationConfig = ApplicationConfig()
 
         # container = NestContainer(applicationConfig)
@@ -40,5 +37,6 @@ class NestFactoryStatic:
         # return self.createAdapterProxy[T](target, httpServer)
 
         return instance
-    
+
+
 NestFactory = NestFactoryStatic()

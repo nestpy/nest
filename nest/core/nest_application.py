@@ -1,6 +1,11 @@
 from nest.common.enums import DocsType, VersioningType
 from nest.common.interfaces import INestApplication
-from nest.common.metadata import CorsOptions, DocsOptions, GlobalPrefixOptions, VersioningOptions
+from nest.common.metadata import (
+    CorsOptions,
+    DocsOptions,
+    GlobalPrefixOptions,
+    VersioningOptions,
+)
 from nest.core import ApplicationConfig
 
 from fastapi import APIRouter, FastAPI
@@ -10,14 +15,10 @@ from typing import Any, List
 
 
 class NestApplication(INestApplication):
-    def __init__(
-        self,
-        appModule: Any,
-        config: ApplicationConfig
-    ):
+    def __init__(self, appModule: Any, config: ApplicationConfig):
         self.nest = None
         self.appModule = appModule()
-        self.config = config # TODO: Change to private readonly
+        self.config = config  # TODO: Change to private readonly
 
         self._setConfig()
 
@@ -35,9 +36,7 @@ class NestApplication(INestApplication):
             self.config.docs = DocsOptions(type=DocsType.SWAGGER)
 
         if type(globalPrefix == bool):
-            globalPrefix = GlobalPrefixOptions(
-                prefix="/api" if globalPrefix else ""
-            )
+            globalPrefix = GlobalPrefixOptions(prefix="/api" if globalPrefix else "")
 
         if type(versioning == bool):
             versioning = VersioningOptions(
@@ -52,7 +51,8 @@ class NestApplication(INestApplication):
     def _setupCors(self) -> None:
         cors = self.config.cors
 
-        if not cors: return
+        if not cors:
+            return
 
         self.nest.add_middleware(
             CORSMiddleware,
@@ -61,19 +61,19 @@ class NestApplication(INestApplication):
             allow_headers=cors.allowedHeaders,
             allow_origins=cors.origins,
             allow_methods=cors.methods,
-            max_age=cors.maxAge
+            max_age=cors.maxAge,
         )
 
     def _setupDocs(self) -> None:
         docs = self.config.docs
 
-        if not docs: 
+        if not docs:
             self.nest = FastAPI(docs_url=None, redoc_url=None)
             return
 
         self.nest = FastAPI(
-            docs_url= docs.swagger_url if docs.type == DocsType.SWAGGER else None,
-            redoc_url= docs.redoc_url if docs.type == DocsType.REDOC else None,
+            docs_url=docs.swagger_url if docs.type == DocsType.SWAGGER else None,
+            redoc_url=docs.redoc_url if docs.type == DocsType.REDOC else None,
             title=docs.title,
             description=docs.description,
             summary=docs.summary,
@@ -82,7 +82,7 @@ class NestApplication(INestApplication):
             contact=docs.contact,
             license_info=docs.license_info,
             openapi_tags=docs.openapi_tags,
-            openapi_url=docs.openapi_url
+            openapi_url=docs.openapi_url,
         )
 
     def _setupModule(self) -> None:
@@ -100,28 +100,17 @@ class NestApplication(INestApplication):
         globalPrefix = self.config.globalPrefix.prefix
 
         for controller in controllers:
-            router = APIRouter(
-                prefix=f"{globalPrefix}",
-                tags=controller().tags
-            )
+            router = APIRouter(prefix=f"{globalPrefix}", tags=controller().tags)
 
             for route in controller().routes:
-                controller()._fix_endpoint_signature(
-                    controller,
-                    route.endpoint
-                )
+                controller()._fix_endpoint_signature(controller, route.endpoint)
 
                 router.add_api_route(
                     path=self._generatePrefix(
-                        f"{controller().prefix}{route.path}",
-                        route.version
+                        f"{controller().prefix}{route.path}", route.version
                     ),
                     endpoint=route.endpoint,
-                    **route.dict(exclude={
-                        "endpoint", 
-                        "path", 
-                        "version"
-                    }),
+                    **route.dict(exclude={"endpoint", "path", "version"}),
                 )
 
             self.nest.include_router(router)
@@ -143,13 +132,9 @@ class NestApplication(INestApplication):
         self.config.cors = options
 
     def enableDocs(self, type: DocsType, options: DocsOptions = DocsOptions()) -> None:
-        self.config.docs = options.copy(update={ "type": type })
+        self.config.docs = options.copy(update={"type": type})
 
-    def enableVersioning(
-        self,
-        type: VersioningType,
-        defaultVersioning: str = "1"
-    ):
+    def enableVersioning(self, type: VersioningType, defaultVersioning: str = "1"):
         self.config.versioning = VersioningOptions(
             type=type, defaultVersioning=defaultVersioning
         )
@@ -161,7 +146,4 @@ class NestApplication(INestApplication):
         uvicorn.run(self.nest, host=host, port=port)
 
     def setGlobalPrefix(self, prefix: str, exclude: List[str] = []) -> None:
-        self.config.globalPrefix = GlobalPrefixOptions(
-            prefix=prefix,
-            exclude=exclude
-        )
+        self.config.globalPrefix = GlobalPrefixOptions(prefix=prefix, exclude=exclude)

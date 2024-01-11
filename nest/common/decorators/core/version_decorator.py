@@ -6,4 +6,5 @@ def Version(version: str):
     def decorator(fn: Callable):
         setattr(fn, ROUTE_VERSION_KEY, version)
         return fn
+
     return decorator

@@ -1,5 +1,10 @@
 from typing import Any, Callable, List, Optional, Type
-from nest.common.keys import IS_ROUTE_KEY, ROUTE_HTTP_CODE_KEY, ROUTE_INFO_KEY, ROUTE_VERSION_KEY
+from nest.common.keys import (
+    IS_ROUTE_KEY,
+    ROUTE_HTTP_CODE_KEY,
+    ROUTE_INFO_KEY,
+    ROUTE_VERSION_KEY,
+)
 from nest.common.metadata import Route
 from nest.core.injector.dependency_injection import factory
 
@@ -10,16 +15,11 @@ from kink import inject
 
 
 class Controller:
-    def __init__(
-            self,
-            prefix: str = "/",
-            version: Optional[str] = None
-        ) -> None:
+    def __init__(self, prefix: str = "/", version: Optional[str] = None) -> None:
         self.prefix = prefix
         self.version = version
 
     def __call__(decorator, ClassBasedView):
-
         wrapper = inject()
         cls = wrapper(ClassBasedView)
 
@@ -52,7 +52,9 @@ class Controller:
                             endpoint, ROUTE_HTTP_CODE_KEY, route.status_code
                         )
 
-                        version = getattr(endpoint, ROUTE_VERSION_KEY, decorator.version)
+                        version = getattr(
+                            endpoint, ROUTE_VERSION_KEY, decorator.version
+                        )
 
                         routes.append(
                             route.copy(
@@ -89,9 +91,7 @@ class Controller:
                     for parameter in old_parameters[1:]
                 ]
 
-                new_signature = old_signature.replace(
-                    parameters=new_parameters
-                )
+                new_signature = old_signature.replace(parameters=new_parameters)
 
                 setattr(endpoint, "__signature__", new_signature)
 

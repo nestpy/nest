@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import List
 
+
 class CorsOptions(BaseModel):
     origins: List[str] = ["*"]
     methods: List[str] = ["*"]

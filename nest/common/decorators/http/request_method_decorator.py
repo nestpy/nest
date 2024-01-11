@@ -41,4 +41,5 @@ def _http_verb(path: str, method: str, status_code: int = 200, **kwargs):
         setattr(fn, ROUTE_INFO_KEY, route_info)
 
         return fn
+
     return decorator
