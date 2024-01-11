@@ -15,7 +15,11 @@ from kink import inject
 
 
 class Controller:
-    def __init__(self, prefix: str = "/", version: Optional[str] = None) -> None:
+    def __init__(
+        self,
+        prefix: str = "/",
+        version: Optional[str] = None
+    ) -> None:
         self.prefix = prefix
         self.version = version
 
@@ -87,11 +91,15 @@ class Controller:
                     default=Depends(factory(cls))
                 )
                 new_parameters = [new_self_parameter] + [
-                    parameter.replace(kind=Parameter.KEYWORD_ONLY)
+                    parameter.replace(
+                        kind=Parameter.KEYWORD_ONLY
+                    )
                     for parameter in old_parameters[1:]
                 ]
 
-                new_signature = old_signature.replace(parameters=new_parameters)
+                new_signature = old_signature.replace(
+                    parameters=new_parameters
+                )
 
                 setattr(endpoint, "__signature__", new_signature)
 

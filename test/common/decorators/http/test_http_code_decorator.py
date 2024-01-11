@@ -5,7 +5,7 @@ import pytest
 
 
 class TestHttpCode:
-    
+
     def test_HttpCodeDecorator_AssignsStatusCodeToFunction_UsingIntParam(self):
 
         def fn(): pass

@@ -36,7 +36,9 @@ class NestApplication(INestApplication):
             self.config.docs = DocsOptions(type=DocsType.SWAGGER)
 
         if type(globalPrefix == bool):
-            globalPrefix = GlobalPrefixOptions(prefix="/api" if globalPrefix else "")
+            globalPrefix = GlobalPrefixOptions(
+                prefix="/api" if globalPrefix else ""
+            )
 
         if type(versioning == bool):
             versioning = VersioningOptions(
@@ -71,9 +73,12 @@ class NestApplication(INestApplication):
             self.nest = FastAPI(docs_url=None, redoc_url=None)
             return
 
+        docs_url = docs.swagger_url if docs.type == DocsType.SWAGGER else None
+        redoc_url = docs.redoc_url if docs.type == DocsType.REDOC else None
+
         self.nest = FastAPI(
-            docs_url=docs.swagger_url if docs.type == DocsType.SWAGGER else None,
-            redoc_url=docs.redoc_url if docs.type == DocsType.REDOC else None,
+            docs_url=docs_url,
+            redoc_url=redoc_url,
             title=docs.title,
             description=docs.description,
             summary=docs.summary,
@@ -100,10 +105,15 @@ class NestApplication(INestApplication):
         globalPrefix = self.config.globalPrefix.prefix
 
         for controller in controllers:
-            router = APIRouter(prefix=f"{globalPrefix}", tags=controller().tags)
+            router = APIRouter(
+                prefix=f"{globalPrefix}",
+                tags=controller().tags
+            )
 
             for route in controller().routes:
-                controller()._fix_endpoint_signature(controller, route.endpoint)
+                controller()._fix_endpoint_signature(
+                    controller, route.endpoint
+                )
 
                 router.add_api_route(
                     path=self._generatePrefix(
@@ -131,10 +141,18 @@ class NestApplication(INestApplication):
     def enableCors(self, options: CorsOptions) -> None:
         self.config.cors = options
 
-    def enableDocs(self, type: DocsType, options: DocsOptions = DocsOptions()) -> None:
+    def enableDocs(
+        self,
+        type: DocsType,
+        options: DocsOptions = DocsOptions()
+    ) -> None:
         self.config.docs = options.copy(update={"type": type})
 
-    def enableVersioning(self, type: VersioningType, defaultVersioning: str = "1"):
+    def enableVersioning(
+        self,
+        type: VersioningType,
+        defaultVersioning: str = "1"
+    ) -> None:
         self.config.versioning = VersioningOptions(
             type=type, defaultVersioning=defaultVersioning
         )
@@ -146,4 +164,7 @@ class NestApplication(INestApplication):
         uvicorn.run(self.nest, host=host, port=port)
 
     def setGlobalPrefix(self, prefix: str, exclude: List[str] = []) -> None:
-        self.config.globalPrefix = GlobalPrefixOptions(prefix=prefix, exclude=exclude)
+        self.config.globalPrefix = GlobalPrefixOptions(
+            prefix=prefix,
+            exclude=exclude
+        )
