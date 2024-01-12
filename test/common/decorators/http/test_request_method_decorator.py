@@ -1,4 +1,4 @@
-from nest.common import Delete, Get, Head, Options, Path, Put
+from nest.common import Get
 from nest.common.keys import IS_ROUTE_KEY, ROUTE_INFO_KEY
 from nest.common.metadata import Route
 
@@ -9,8 +9,8 @@ class TestRequestMethod:
 
         path: str = '/get'
         user_expect = Route(
-            path=path, 
-            methods=['GET'], 
+            path=path,
+            methods=['GET'],
             status_code=200
         )
 
@@ -21,7 +21,7 @@ class TestRequestMethod:
 
         assert hasattr(fn_decorated, IS_ROUTE_KEY)
         assert getattr(fn_decorated, IS_ROUTE_KEY)
-        
+
         assert hasattr(fn_decorated, ROUTE_INFO_KEY)
         assert user_expect.__eq__(getattr(fn_decorated, ROUTE_INFO_KEY))
 
@@ -29,7 +29,7 @@ class TestRequestMethod:
 
         user_expect = Route(
             path='/',
-            methods=['GET'], 
+            methods=['GET'],
             status_code=200
         )
 
@@ -40,6 +40,6 @@ class TestRequestMethod:
 
         assert hasattr(fn_decorated, IS_ROUTE_KEY)
         assert getattr(fn_decorated, IS_ROUTE_KEY)
-        
+
         assert hasattr(fn_decorated, ROUTE_INFO_KEY)
-        assert user_expect.__eq__(getattr(fn_decorated, ROUTE_INFO_KEY)) 
+        assert user_expect.__eq__(getattr(fn_decorated, ROUTE_INFO_KEY))

@@ -18,9 +18,12 @@ from typing import (
     List,
 )
 
+ResponseType = Union[Type[Response], DefaultPlaceholder]
+
+
 class OpenapiArgs(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
-    
+
     description: Optional[str] = None
     include_in_schema: bool = True
     openapi_extra: Optional[Dict[str, Any]] = None
@@ -46,7 +49,7 @@ class RouteArgs(BaseModel):
     response_model_exclude_unset: bool = False
     response_model_exclude_defaults: bool = False
     response_model_exclude_none: bool = False
-    response_class: Union[Type[Response], DefaultPlaceholder] = Default(JSONResponse)
+    response_class: ResponseType = Default(JSONResponse)
     name: Optional[str] = None
     route_class_override: Optional[Type[APIRoute]] = None
     callbacks: Optional[List[RouteBase]] = None
@@ -74,12 +77,10 @@ class Route(BaseModel):
     response_model_exclude_defaults: bool = False
     response_model_exclude_none: bool = False
     include_in_schema: bool = True
-    response_class: Union[
-        Type[Response],
-        DefaultPlaceholder
-    ] = Default(JSONResponse)
+    response_class: ResponseType = Default(JSONResponse)
     name: Optional[str] = None
     route_class_override: Optional[Type[APIRoute]] = None
     callbacks: Optional[List[RouteBase]] = None
     openapi_extra: Optional[Dict[str, Any]] = None
     endpoint: Optional[Callable[..., Any]] = None
+    version: Optional[str] = None

@@ -7,7 +7,7 @@ class TestApiTags():
     def test_ShouldAssinsListTagsToFunction_UsingListStrParam(self):
 
         tags = ['one', 'two']
-        
+
         @ApiTags(tags)
         def fn(): pass
 
@@ -17,10 +17,9 @@ class TestApiTags():
     def test_ShouldAssinsListTagsToFunction_UsingStrParam(self):
 
         tags = 'one'
-        
+
         @ApiTags(tags)
         def fn(): pass
 
         assert hasattr(fn, OPENAPI_TAGS_KEY)
         assert getattr(fn, OPENAPI_TAGS_KEY) == [tags]
-

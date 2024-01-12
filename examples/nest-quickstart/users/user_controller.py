@@ -1,17 +1,18 @@
 from typing import List
 
-from nest.common import Controller, Get, Post, Put, Delete
+from nest.common import Controller, Get, Post, Put, Delete, Version
 
 from users.user_service import UserService
 from .user_dto import User
 
 
-@Controller("/users")
+@Controller("/users", version='1')
 class UserController:
     def __init__(self, user_service: UserService):
         self.user_service = user_service
 
     @Get("/")
+    @Version('3')
     async def findAll(self) -> List[User]:
         return await self.user_service.findAll()
 

@@ -1,5 +1,10 @@
 from typing import Any, Callable, List, Optional, Type
-from nest.common.keys import IS_ROUTE_KEY, ROUTE_HTTP_CODE_KEY, ROUTE_INFO_KEY
+from nest.common.keys import (
+    IS_ROUTE_KEY,
+    ROUTE_HTTP_CODE_KEY,
+    ROUTE_INFO_KEY,
+    ROUTE_VERSION_KEY,
+)
 from nest.common.metadata import Route
 from nest.core.injector.dependency_injection import factory
 
@@ -10,8 +15,13 @@ from kink import inject
 
 
 class Controller:
-    def __init__(self, prefix: str = "/") -> None:
+    def __init__(
+        self,
+        prefix: str = "/",
+        version: Optional[str] = None
+    ) -> None:
         self.prefix = prefix
+        self.version = version
 
     def __call__(decorator, ClassBasedView):
         wrapper = inject()
@@ -41,14 +51,21 @@ class Controller:
 
                     if callable(endpoint) and hasattr(endpoint, IS_ROUTE_KEY):
                         route = getattr(endpoint, ROUTE_INFO_KEY)
+
                         status_code = getattr(
                             endpoint, ROUTE_HTTP_CODE_KEY, route.status_code
                         )
+
+                        version = getattr(
+                            endpoint, ROUTE_VERSION_KEY, decorator.version
+                        )
+
                         routes.append(
                             route.copy(
                                 update={
                                     "endpoint": endpoint,
                                     "status_code": status_code,
+                                    "version": version,
                                 }
                             )
                         )
@@ -74,7 +91,9 @@ class Controller:
                     default=Depends(factory(cls))
                 )
                 new_parameters = [new_self_parameter] + [
-                    parameter.replace(kind=Parameter.KEYWORD_ONLY)
+                    parameter.replace(
+                        kind=Parameter.KEYWORD_ONLY
+                    )
                     for parameter in old_parameters[1:]
                 ]
 
