@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://nestpy.org/" target="blank"><img src="" width="120" alt="NestPy Logo" /></a>
+  <a href="https://nestpy.org/" target="blank"><img src="https://raw.githubusercontent.com/nestpy/docs.nestjs.org/830729b3530b3f55b70f174fda6a8839dc6d4612/public/img/nestpy.png" width="120" alt="NestPy Logo" /></a>
 </p>
 
 <p align="center">A progressive <a href="https://python.org" target="_blank">Python</a> framework for building efficient and scalable server-side applications.</p>
