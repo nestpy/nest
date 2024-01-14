@@ -28,5 +28,5 @@ jobs:
         poetry run flake8
     - name: Use mypy
       run: |
-        poetry run mypy
+        poetry run mypy nest
 
