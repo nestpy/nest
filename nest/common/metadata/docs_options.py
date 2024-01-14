@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 from nest.common.enums import DocsType
 
-from typing import Any, List, Optional
+from typing import Any, Optional
 
 
 class Contact(BaseModel):
