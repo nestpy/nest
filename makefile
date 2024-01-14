@@ -27,4 +27,4 @@ mypy:
 	-p 3000:3000 \
 	-w /app \
 	-v ${PWD}:/app \
-	-it nestpy:0.1.0 poetry run mypy
+	-it nestpy:0.1.0 poetry run mypy nest

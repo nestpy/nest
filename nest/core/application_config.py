@@ -5,7 +5,7 @@ from nest.common.metadata import (
     VersioningOptions,
 )
 
-from typing import Union, Literal
+from typing import Union
 
 
 class ApplicationConfig:

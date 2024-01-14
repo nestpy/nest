@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 from nest.common.enums import DocsType
 
-from typing import List, Optional
+from typing import Any, List, Optional
 
 
 class Contact(BaseModel):
@@ -36,7 +36,7 @@ class DocsOptions(BaseModel):
     summary: str = ""
     version: str = "0.1.0"
     terms_of_service: str = ""
-    contact: Optional[Contact] = None
-    license_info: Optional[LicenseInfo] = None
-    openapi_tags: Optional[List[OpenapiTags]] = None
+    contact: Any = None
+    license_info: Any = None
+    openapi_tags: Any = None
     openapi_url: str = "/openapi.json"

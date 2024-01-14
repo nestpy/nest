@@ -55,7 +55,7 @@ class NestApplication(INestApplication):
 
         if not cors:
             return
-        
+
         if not isinstance(cors, CorsOptions):
             return
 
@@ -75,7 +75,7 @@ class NestApplication(INestApplication):
         if not docs:
             self.nest = FastAPI(docs_url=None, redoc_url=None)
             return
-        
+
         if not isinstance(docs, DocsOptions):
             return
 
