@@ -1,0 +1,40 @@
+[tool.poetry]
+name = "nestpy-framework"
+version = "0.1.2"
+description = "Modern, fast, powerful python web framework"
+authors = ["Manuel S. Lemos <iam@manuelslemos.es>"]
+readme = "README.md"
+license = "MIT"
+packages = [{include = "nest"}]
+
+[tool.poetry.scripts]
+start = ''
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "0.105.0"
+pydantic = "2.5.3"
+uvicorn = {extras = ["standard"], version = "0.25.0"}
+kink = "0.7.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "7.4.4"
+mypy = "1.8.0"
+flake8 = "7.0.0"
+black = "23.12.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.flake8]
+exclude = [
+    ".git",
+    "__pycache__",
+    "docs/source/conf.py",
+    "old",
+    "build",
+    "dist",
+    "__init__.py"
+]
