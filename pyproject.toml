@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nestpy-framework"
-version = "0.1.1"
+version = "0.1.2"
 description = "Modern, fast, powerful python web framework"
 authors = ["Manuel S. Lemos <iam@manuelslemos.es>"]
 readme = "README.md"
