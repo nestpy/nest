@@ -32,17 +32,16 @@ class NestApplication(INestApplication):
             self.config.cors = CorsOptions()
 
         if type(docs == bool) and docs:
-            print(docs)
             self.config.docs = DocsOptions(type=DocsType.SWAGGER)
 
-        if type(globalPrefix == bool):
-            globalPrefix = GlobalPrefixOptions(
-                prefix="/api" if globalPrefix else ""
+        if type(globalPrefix == bool) and globalPrefix:
+            self.config.globalPrefix = GlobalPrefixOptions(
+                prefix="/api"
             )
 
-        if type(versioning == bool):
-            versioning = VersioningOptions(
-                type=VersioningType.URI if versioning else VersioningType.NONE
+        if type(versioning == bool) and versioning:
+            self.config.versioning = VersioningOptions(
+                type=VersioningType.URI
             )
 
     def _setup(self) -> None:
