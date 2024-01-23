@@ -1,4 +1,4 @@
-from nest.common import Module
+from nest.common.decorators import Module
 from nest.core import NestApplication, ApplicationConfig
 
 

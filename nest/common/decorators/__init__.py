@@ -10,3 +10,4 @@ from .http import Path as Path
 from .http import Post as Post
 from .http import Put as Put
 from .module_decorator import Module as Module
+from .openapi import ApiTags as ApiTags

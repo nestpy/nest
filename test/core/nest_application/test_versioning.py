@@ -1,4 +1,5 @@
-from nest.common import Module, VersioningType
+from nest.common.decorators import Module
+from nest.common.enums import VersioningType
 from nest.common.metadata import VersioningOptions
 from nest.core import NestApplication, ApplicationConfig
 

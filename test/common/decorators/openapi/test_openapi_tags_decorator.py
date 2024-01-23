@@ -1,4 +1,4 @@
-from nest.common.decorators.openapi import ApiTags
+from nest.common.decorators import ApiTags
 from nest.common.keys import OPENAPI_TAGS_KEY
 
 
