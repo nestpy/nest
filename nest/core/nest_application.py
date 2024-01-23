@@ -138,7 +138,7 @@ class NestApplication(INestApplication):
         versioning = self.config.versioning
 
         if versioning.type == VersioningType.URI:
-            default = versioning.defaultVersioning
+            default = versioning.defaultVersion
             version = default if version is None else version
             return f"/v{version}{path}"
 
@@ -157,10 +157,10 @@ class NestApplication(INestApplication):
     def enableVersioning(
         self,
         type: VersioningType,
-        defaultVersioning: str = "1"
+        defaultVersion: str = "1"
     ) -> None:
         self.config.versioning = VersioningOptions(
-            type=type, defaultVersioning=defaultVersioning
+            type=type, defaultVersion=defaultVersion
         )
 
     def listen(self, host: str = "0.0.0.0", port: int = 3000) -> None:
