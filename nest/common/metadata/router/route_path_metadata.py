@@ -1,9 +1,10 @@
 from pydantic import BaseModel
 
+from typing import Optional
 
 class RoutePathMetadata(BaseModel):
     controllerPath: str
-    controllerVersion: str
+    controllerVersion: Optional[str] = None
     methodPath: str
-    methodVersion: str
+    methodVersion: Optional[str] = None
     # modulePath: str

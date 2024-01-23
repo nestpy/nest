@@ -26,7 +26,9 @@ class RoutePathFactory:
 
 
     def getVersion(self, metadata: RoutePathMetadata):
-        return metadata.methodVersion or metadata.controllerVersion
+        return metadata.methodVersion \
+            or metadata.controllerVersion \
+            or self.config.versioning.defaultVersion
 
     def getVersionPrefix(self):
         pass
