@@ -21,6 +21,7 @@ class NestApplication(INestApplication):
         self.config = config  # TODO: Change to private readonly
 
         self._setConfig()
+        
 
     def _setConfig(self) -> None:
         cors = self.config.cors
