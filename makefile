@@ -25,3 +25,9 @@ mypy:
 	-w /app \
 	-v ${PWD}:/app \
 	-it nestpy:0.1.0 poetry run mypy nest
+
+pytest:
+	docker run --rm \
+	-w /app \
+	-v ${PWD}:/app \
+	-it nestpy:0.1.0 poetry run pytest
