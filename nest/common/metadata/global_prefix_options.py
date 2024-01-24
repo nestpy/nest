@@ -4,4 +4,4 @@ from typing import List
 
 class GlobalPrefixOptions(BaseModel):
     exclude: List[str] = []
-    prefix: str = ""
+    prefix: str = "/api"
