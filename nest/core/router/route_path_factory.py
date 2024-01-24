@@ -12,24 +12,44 @@ class RoutePathFactory:
     def create(self, metadata: RoutePathMetadata):
         # paths = []
 
-        path = f'{metadata.controllerPath}{metadata.methodPath}'
+
+        path = self.concatPaths(metadata.controllerPath, metadata.methodPath)
+
+        if (
+            self.config.versioning and
+            self.config.getVersioning().type == VersioningType.URI
+        ):
+            key = self.config.getVersioning().key
+            number = self.getVersion(metadata)
+
+            versionPath = f'{key}{number}'
+            path = self.concatPaths(versionPath, path)
 
         if (self.config.globalPrefix):
-            path = f'{metadata.globalPrefix}{path}'
-
-        if (self.config.versioning.type == VersioningType.URI):
-            versionPath = self.getVersion(metadata)
-            path = f'{path}{versionPath}' 
-        
+            globalPrefix = self.config.getGlobalPrefix().prefix
+            path = self.concatPaths(globalPrefix, path)
         
         return path
 
+    def concatPaths(self, firstPath: str, lastPath: str):
+
+        firstPath = firstPath.strip('/')
+        lastPath = lastPath.strip('/')
+
+        path = f'/{firstPath}/{lastPath}'
+
+        return self.formatPath(path)
+    
+    def formatPath(self, path):
+        if path in [' ', '', '/', '//']: return '/'
+
+        return path.replace('//', '/').rstrip('/')
 
     def getVersion(self, metadata: RoutePathMetadata):
         return metadata.methodVersion \
             or metadata.controllerVersion \
-            or self.config.versioning.defaultVersion
-
+            or self.config.getVersioning().defaultVersion
+        
     def getVersionPrefix(self):
         pass
 
