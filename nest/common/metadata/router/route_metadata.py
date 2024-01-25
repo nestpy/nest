@@ -32,29 +32,6 @@ class OpenapiArgs(BaseModel):
     summary: Optional[str] = None
     tags: Optional[List[str]] = None
 
-
-class RouteArgs(BaseModel):
-    model_config = ConfigDict(arbitrary_types_allowed=True)
-
-    path: str
-    status_code: Optional[int] = None
-    methods: Optional[Union[Set[str], List[str]]] = None
-    response_model: Optional[Type[Any]] = None
-    dependencies: Optional[Sequence[params.Depends]] = None
-    deprecated: Optional[bool] = None
-    operation_id: Optional[str] = None
-    response_model_include: Optional[Union[SetIntStr, DictIntStrAny]] = None
-    response_model_exclude: Optional[Union[SetIntStr, DictIntStrAny]] = None
-    response_model_by_alias: bool = True
-    response_model_exclude_unset: bool = False
-    response_model_exclude_defaults: bool = False
-    response_model_exclude_none: bool = False
-    response_class: ResponseType = Default(JSONResponse)
-    name: Optional[str] = None
-    route_class_override: Optional[Type[APIRoute]] = None
-    callbacks: Optional[List[RouteBase]] = None
-
-
 class Route(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
