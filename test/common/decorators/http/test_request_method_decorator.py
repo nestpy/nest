@@ -11,7 +11,8 @@ class TestRequestMethod:
         ('/', RouteArgs(path='/', methods=['GET'], status_code=200), Get),
         ('/api', RouteArgs(path='/api', methods=['GET'], status_code=200), Get),
         ('/', RouteArgs(path='/', methods=['POST'], status_code=201), Post),
-        ('/', RouteArgs(path='/', methods=['POST'], status_code=201), Post),
+        ('/', RouteArgs(path='/', methods=['POST'], status_code=201
+                        ), Post),
         ('/api', RouteArgs(path='/api', methods=['POST'], status_code=201), Post)
     ])
     def test_GetDecorator_AssignsRouteArgsToFunction_UsingPathParam(self, path, route_expect, method):
