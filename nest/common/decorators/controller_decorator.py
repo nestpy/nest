@@ -1,6 +1,6 @@
 from typing import Any, Callable, List, Optional, Type
 from nest.common.keys import (
-    IS_ROUTE_KEY,
+    ROUTER_WATERMARK,
     ROUTE_HTTP_CODE_KEY,
     ROUTE_INFO_KEY,
     ROUTE_VERSION_KEY,
@@ -49,7 +49,7 @@ class Controller:
                 for attr_name in dir(ClassBasedView):
                     endpoint = getattr(ClassBasedView, attr_name)
 
-                    if callable(endpoint) and hasattr(endpoint, IS_ROUTE_KEY):
+                    if callable(endpoint) and hasattr(endpoint, ROUTER_WATERMARK):
                         route = getattr(endpoint, ROUTE_INFO_KEY)
 
                         status_code = getattr(
