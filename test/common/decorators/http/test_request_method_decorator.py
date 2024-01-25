@@ -1,29 +1,29 @@
-from nest.common import Get
+from nest.common import Get, Post
 from nest.common.keys import ROUTER_WATERMARK, ROUTE_INFO_KEY
 from nest.common.metadata import RouteArgs
 
+import pytest
 
 class TestRequestMethod:
 
-    def test_GetDecorator_AssignsRouteArgsToFunction_UsingPathParam(self):
+    @pytest.mark.parametrize("path,route_expect,method", [
+        ('/', RouteArgs(path='/', methods=['GET'], status_code=200), Get),
+        ('/', RouteArgs(path='/', methods=['GET'], status_code=200), Get),
+        ('/api', RouteArgs(path='/api', methods=['GET'], status_code=200), Get),
+        ('/', RouteArgs(path='/', methods=['POST'], status_code=201), Post),
+        ('/', RouteArgs(path='/', methods=['POST'], status_code=201), Post),
+        ('/api', RouteArgs(path='/api', methods=['POST'], status_code=201), Post)
+    ])
+    def test_GetDecorator_AssignsRouteArgsToFunction_UsingPathParam(self, path, route_expect, method):
 
-        path: str = '/get'
-        user_expect = RouteArgs(
-            path=path,
-            methods=['GET'],
-            status_code=200
-        )
-
+        @method(path)
         def fn(): pass
 
-        get_decorator = Get(path)
-        fn_decorated = get_decorator(fn)
+        assert hasattr(fn, ROUTER_WATERMARK)
+        assert getattr(fn, ROUTER_WATERMARK)
 
-        assert hasattr(fn_decorated, ROUTER_WATERMARK)
-        assert getattr(fn_decorated, ROUTER_WATERMARK)
-
-        assert hasattr(fn_decorated, ROUTE_INFO_KEY)
-        assert user_expect.__eq__(getattr(fn_decorated, ROUTE_INFO_KEY))
+        assert hasattr(fn, ROUTE_INFO_KEY)
+        assert route_expect.__eq__(getattr(fn, ROUTE_INFO_KEY))
 
     def test_GetDecorator_AssignsRouteArgsToFunction_UsingDefaultParam(self):
 
