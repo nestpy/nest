@@ -1,4 +1,4 @@
-from .controller_decorator import Controller as Controller
+from .core.controller_decorator import Controller as Controller
 from .core import Injectable as Injectable
 from .core import Version as Version
 from .http import Delete as Delete
