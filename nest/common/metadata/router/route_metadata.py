@@ -4,6 +4,7 @@ from fastapi.routing import APIRoute
 from fastapi.responses import JSONResponse
 
 from nest.common.typing import SetIntStr, DictIntStrAny
+
 from pydantic import BaseModel, ConfigDict
 from starlette.routing import Route as RouteBase
 from typing import (
@@ -15,7 +16,7 @@ from typing import (
     Set,
     Type,
     Union,
-    List,
+    List
 )
 
 ResponseType = Union[Type[Response], DefaultPlaceholder]
@@ -32,12 +33,22 @@ class OpenapiArgs(BaseModel):
     summary: Optional[str] = None
     tags: Optional[List[str]] = None
 
+class RoutePathMetadata(BaseModel):
+    controllerPath: str
+    controllerVersion: Optional[str] = None
+    methodPath: str
+    methodVersion: Optional[str] = None
+    # modulePath: str
+
 class Route(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
+    path_metadata: 'RoutePathMetadata'
+    status_code: Optional[int] = None
+    endpoint: Optional[Callable[..., Any]] = None
+    # ------
     path: str
     response_model: Optional[Type[Any]] = None
-    status_code: Optional[int] = None
     tags: Optional[List[str]] = None
     dependencies: Optional[Sequence[params.Depends]] = None
     summary: Optional[str] = None
@@ -59,5 +70,3 @@ class Route(BaseModel):
     route_class_override: Optional[Type[APIRoute]] = None
     callbacks: Optional[List[RouteBase]] = None
     openapi_extra: Optional[Dict[str, Any]] = None
-    endpoint: Optional[Callable[..., Any]] = None
-    version: Optional[str] = None
