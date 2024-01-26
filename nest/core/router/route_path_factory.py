@@ -1,4 +1,4 @@
-from nest.common import VersioningType
+from nest.common.enums import VersioningType
 from nest.common.metadata import RoutePathMetadata
 from nest.core import ApplicationConfig
 

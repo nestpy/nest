@@ -6,7 +6,9 @@ from nest.common.metadata import (
     GlobalPrefixOptions,
     VersioningOptions,
 )
+from nest.common.utils import fix_endpoint_signature
 from nest.core import ApplicationConfig
+from nest.core.router import RoutePathFactory
 
 from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -108,41 +110,26 @@ class NestApplication(INestApplication):
         if not isinstance(self.config.globalPrefix, GlobalPrefixOptions):
             raise ValueError("TODO")
 
-        globalPrefix = self.config.globalPrefix.prefix
+        PathFactory = RoutePathFactory(self.config)
 
         for controller in controllers:
             router = APIRouter(
-                prefix=f"{globalPrefix}",
+                prefix='',
                 tags=controller().tags
             )
 
             for route in controller().routes:
-                controller()._fix_endpoint_signature(
+                fix_endpoint_signature(
                     controller, route.endpoint
                 )
 
                 router.add_api_route(
-                    path=self._generatePrefix(
-                        f"{controller().prefix}{route.path}", route.version
-                    ),
+                    path=PathFactory.create(route.path_metadata),
                     endpoint=route.endpoint,
-                    **route.dict(exclude={"endpoint", "path", "version"}),
+                    **route.dict(exclude={"endpoint", "path", "path_metadata"}),
                 )
 
             self.nest.include_router(router)
-
-    def _generatePrefix(self, path: str, version: str):
-        if not isinstance(self.config.versioning, VersioningOptions):
-            raise ValueError("TODO")
-
-        versioning = self.config.versioning
-
-        if versioning.type == VersioningType.URI:
-            default = versioning.defaultVersion
-            version = default if version is None else version
-            return f"/v{version}{path}"
-
-        return f"{path}"
 
     def enableCors(self, options: CorsOptions) -> None:
         self.config.cors = options
