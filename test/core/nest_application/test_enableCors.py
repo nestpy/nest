@@ -3,19 +3,7 @@ from nest.common.metadata import CorsOptions
 from nest.core import NestApplication, ApplicationConfig
 
 
-class TestNestApplication:
-
-    def test_ShouldFalseInOptions_WhenInstanceByDefault(self):
-        @Module()
-        class app_module:
-            pass
-
-        config = ApplicationConfig()
-        app = NestApplication(app_module, config)
-
-        assert app.config.cors is False
-        assert app.config.globalPrefix is False
-        assert app.config.versioning is False
+class TestCors:
 
     def test_ShouldDefaultConfigOptions_WhenInstanceWithCorsTrue(self):
         @Module()
@@ -27,7 +15,7 @@ class TestNestApplication:
         config = ApplicationConfig(cors=True)
         app = NestApplication(app_module, config)
 
-        assert config_expect.__eq__(app.config.cors)
+        assert config_expect.__eq__(app.config.getCors())
 
     def test_ShouldException_WhenInstanceWithCorsNotBool(self):
         pass
@@ -50,4 +38,4 @@ class TestNestApplication:
 
         app.enableCors(config_expect)
 
-        assert config_expect.__eq__(app.config.cors)
+        assert config_expect.__eq__(app.config.getCors())

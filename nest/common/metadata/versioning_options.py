@@ -4,7 +4,7 @@ from nest.common.enums import VersioningType
 
 
 class VersioningOptions(BaseModel):
-    type: VersioningType = VersioningType.NONE
-    defaultVersioning: str = "1"
+    type: VersioningType = VersioningType.URI
+    defaultVersion: str = "1"
     header: str = "Api-Version"
     key: str = "v"

@@ -6,7 +6,9 @@ from nest.common.metadata import (
     GlobalPrefixOptions,
     VersioningOptions,
 )
+from nest.common.utils import fix_endpoint_signature
 from nest.core import ApplicationConfig
+from nest.core.router import RoutePathFactory
 
 from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -18,32 +20,8 @@ class NestApplication(INestApplication):
     def __init__(self, appModule: Any, config: ApplicationConfig):
         self.nest = FastAPI()
         self.appModule = appModule()
-        self.config = config  # TODO: Change to private readonly
-
-        self._setConfig()
-
-    def _setConfig(self) -> None:
-        cors = self.config.cors
-        docs = self.config.docs
-        globalPrefix = self.config.globalPrefix
-        versioning = self.config.versioning
-
-        if type(cors == bool) and cors:
-            self.config.cors = CorsOptions()
-
-        if type(docs == bool) and docs:
-            print(docs)
-            self.config.docs = DocsOptions(type=DocsType.SWAGGER)
-
-        if type(globalPrefix == bool):
-            globalPrefix = GlobalPrefixOptions(
-                prefix="/api" if globalPrefix else ""
-            )
-
-        if type(versioning == bool):
-            versioning = VersioningOptions(
-                type=VersioningType.URI if versioning else VersioningType.NONE
-            )
+        # TODO: Change to private readonly
+        self.config = config
 
     def _setup(self) -> None:
         self._setupDocs()
@@ -51,7 +29,7 @@ class NestApplication(INestApplication):
         self._setupModule()
 
     def _setupCors(self) -> None:
-        cors = self.config.cors
+        cors = self.config.getCors()
 
         if not cors:
             return
@@ -70,7 +48,7 @@ class NestApplication(INestApplication):
         )
 
     def _setupDocs(self) -> None:
-        docs = self.config.docs
+        docs = self.config.getDocs()
 
         if not docs:
             self.nest = FastAPI(docs_url=None, redoc_url=None)
@@ -105,44 +83,30 @@ class NestApplication(INestApplication):
         self._setupController(controllers)
 
     def _setupController(self, controllers: List[Any]) -> None:
-        if not isinstance(self.config.globalPrefix, GlobalPrefixOptions):
-            raise ValueError("TODO")
-
-        globalPrefix = self.config.globalPrefix.prefix
+        PathFactory = RoutePathFactory(self.config)
 
         for controller in controllers:
             router = APIRouter(
-                prefix=f"{globalPrefix}",
+                prefix='',
                 tags=controller().tags
             )
 
             for route in controller().routes:
-                controller()._fix_endpoint_signature(
+                fix_endpoint_signature(
                     controller, route.endpoint
                 )
 
                 router.add_api_route(
-                    path=self._generatePrefix(
-                        f"{controller().prefix}{route.path}", route.version
-                    ),
+                    path=PathFactory.create(route.path_metadata),
                     endpoint=route.endpoint,
-                    **route.dict(exclude={"endpoint", "path", "version"}),
+                    **route.dict(exclude={
+                        "endpoint",
+                        "path",
+                        "path_metadata"
+                    }),
                 )
 
             self.nest.include_router(router)
-
-    def _generatePrefix(self, path: str, version: str):
-        if not isinstance(self.config.versioning, VersioningOptions):
-            raise ValueError("TODO")
-
-        versioning = self.config.versioning
-
-        if versioning.type == VersioningType.URI:
-            default = versioning.defaultVersioning
-            version = default if version is None else version
-            return f"/v{version}{path}"
-
-        return f"{path}"
 
     def enableCors(self, options: CorsOptions) -> None:
         self.config.cors = options
@@ -157,10 +121,10 @@ class NestApplication(INestApplication):
     def enableVersioning(
         self,
         type: VersioningType,
-        defaultVersioning: str = "1"
+        defaultVersion: str = "1"
     ) -> None:
         self.config.versioning = VersioningOptions(
-            type=type, defaultVersioning=defaultVersioning
+            type=type, defaultVersion=defaultVersion
         )
 
     def listen(self, host: str = "0.0.0.0", port: int = 3000) -> None:

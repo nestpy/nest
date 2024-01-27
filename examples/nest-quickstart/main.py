@@ -11,7 +11,7 @@ def bootstrap():
 
     app.setGlobalPrefix("/api")
 
-    app.enableVersioning(type=VersioningType.URI, defaultVersioning="2")
+    app.enableVersioning(type=VersioningType.URI, defaultVersion="2")
 
     app.enableCors(
         CorsOptions(

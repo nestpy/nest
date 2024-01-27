@@ -3,6 +3,8 @@ from nest.common.enums import HttpStatus
 from typing import Callable
 
 
+# TODO: Compatible with HttpStatus enum
+# TODO: Compatible with String Value
 def HttpCode(status: int):
     is_http_code = any(status == item.value for item in HttpStatus)
     if not is_http_code:

@@ -15,7 +15,7 @@ class INestApplication(ABC):
 
     @abstractmethod
     def enableVersioning(
-        self, type: VersioningType, defaultVersioning: str = "1"
+        self, type: VersioningType, defaultVersion: str = "1"
     ) -> None:
         pass
 
