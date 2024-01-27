@@ -4,6 +4,21 @@
 
 <p align="center">A progressive <a href="https://python.org" target="_blank">Python</a> framework for building efficient and scalable server-side applications.</p>
 
+<p align="center">
+    <a href="https://pypi.org/project/nestpy-framework">
+        <img src="https://img.shields.io/pypi/v/nestpy-framework?color=%2334D058&label=pypi%20package" alt="Version">
+    </a>
+    <a href="https://pypi.org/project/nestpy-framework">
+        <img src="https://img.shields.io/pypi/pyversions/nestpy-framework.svg?color=%2334D058" alt="Python">
+    </a>
+    <a href="https://pepy.tech/project/nestpy-framework">
+        <img src="https://static.pepy.tech/personalized-badge/nestpy-framework?period=total&units=international_system&left_color=grey&right_color=brightgreen&left_text=Downloads" alt="Downloads">
+    </a>
+    <a href="https://github.com/nestpy/nest/blob/main/LICENSE">
+        <img src="https://img.shields.io/github/license/nestpy/nest" alt="License">
+    </a>
+</p>
+
 ## Description
 
 Nest (NestPy) is a framework for building efficient, scalable [Python](https://python.org/) server-side applications and combines elements of OOP (Object Oriented Programming), FP (Functional Programming), and FRP (Functional Reactive Programming).
@@ -18,6 +33,12 @@ Nest provides an out-of-the-box application architecture which allows developers
 
 ## Getting started
 
+To get started with PyNest, you'll need to install it using pip:
+
+```bash
+pip install pynest-api
+```
+
 - To check out the [guide](https://docs.nestpy.org), visit [docs.nestpy.org](https://docs.nestpy.org). :books:
 
 ## Questions
@@ -26,7 +47,7 @@ For questions and support please use the official [Discord channel](). The issue
 
 ## Issues
 
-Please make sure to read the [Issue Reporting Checklist]() before opening an issue. Issues not conforming to the guidelines may be closed immediately.
+Please make sure to read the [Issue Reporting Checklist](https://github.com/nestpy/nest/issues) before opening an issue. Issues not conforming to the guidelines may be closed immediately.
 
 ## Support
 

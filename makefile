@@ -31,3 +31,10 @@ pytest:
 	-w /app \
 	-v ${PWD}:/app \
 	-it nestpy:0.1.0 poetry run pytest
+
+public:
+	docker run --rm \
+	--env-file .env \
+	-w /app \
+	-v ${PWD}:/app \
+	-it nestpy:0.1.0 poetry publish --build
