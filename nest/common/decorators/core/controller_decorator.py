@@ -1,4 +1,4 @@
-from typing import Any, Callable, List, Optional, Type, TYPE_CHECKING
+from typing import List, Optional
 from nest.common.keys import (
     ROUTER_WATERMARK,
     ROUTE_HTTP_CODE_KEY,
@@ -6,10 +6,6 @@ from nest.common.keys import (
     ROUTE_VERSION_KEY,
 )
 from nest.common.metadata import Route, RoutePathMetadata
-from nest.core.injector.dependency_injection import factory
-
-from inspect import Parameter, signature
-from fastapi.params import Depends
 
 from kink import inject
 
@@ -42,7 +38,10 @@ class Controller:
                 for attr_name in dir(ClassBasedView):
                     endpoint = getattr(ClassBasedView, attr_name)
 
-                    if callable(endpoint) and hasattr(endpoint, ROUTER_WATERMARK):
+                    if callable(endpoint) and hasattr(
+                        endpoint,
+                        ROUTER_WATERMARK
+                    ):
                         route = getattr(endpoint, ROUTE_INFO_KEY)
 
                         status_code = getattr(
@@ -53,7 +52,11 @@ class Controller:
                             controllerPath=self.prefix,
                             controllerVersion=self.version,
                             methodPath=route.path,
-                            methodVersion=getattr(endpoint, ROUTE_VERSION_KEY, None)
+                            methodVersion=getattr(
+                                endpoint,
+                                ROUTE_VERSION_KEY,
+                                None
+                            )
                         )
 
                         routes.append(

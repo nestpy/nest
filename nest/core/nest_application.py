@@ -20,8 +20,7 @@ class NestApplication(INestApplication):
     def __init__(self, appModule: Any, config: ApplicationConfig):
         self.nest = FastAPI()
         self.appModule = appModule()
-        self.config = config  # TODO: Change to private readonly
-        
+        self.config = config # TODO: Change to private readonly
 
     def _setup(self) -> None:
         self._setupDocs()
@@ -49,7 +48,7 @@ class NestApplication(INestApplication):
 
     def _setupDocs(self) -> None:
         docs = self.config.getDocs()
-        
+
         if not docs:
             self.nest = FastAPI(docs_url=None, redoc_url=None)
             return
@@ -99,7 +98,11 @@ class NestApplication(INestApplication):
                 router.add_api_route(
                     path=PathFactory.create(route.path_metadata),
                     endpoint=route.endpoint,
-                    **route.dict(exclude={"endpoint", "path", "path_metadata"}),
+                    **route.dict(exclude={
+                        "endpoint",
+                        "path",
+                        "path_metadata"
+                    }),
                 )
 
             self.nest.include_router(router)

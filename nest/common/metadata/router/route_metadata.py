@@ -33,12 +33,14 @@ class OpenapiArgs(BaseModel):
     summary: Optional[str] = None
     tags: Optional[List[str]] = None
 
+
 class RoutePathMetadata(BaseModel):
     controllerPath: str
     controllerVersion: Optional[str] = None
     methodPath: str
     methodVersion: Optional[str] = None
     # modulePath: str
+
 
 class Route(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)

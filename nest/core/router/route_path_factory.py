@@ -12,7 +12,6 @@ class RoutePathFactory:
     def create(self, metadata: RoutePathMetadata):
         # paths = []
 
-
         path = self.concatPaths(metadata.controllerPath, metadata.methodPath)
 
         if (
@@ -28,7 +27,7 @@ class RoutePathFactory:
         if (self.config.globalPrefix):
             globalPrefix = self.config.getGlobalPrefix().prefix
             path = self.concatPaths(globalPrefix, path)
-        
+
         return path
 
     def concatPaths(self, firstPath: str, lastPath: str):
@@ -39,9 +38,10 @@ class RoutePathFactory:
         path = f'/{firstPath}/{lastPath}'
 
         return self.formatPath(path)
-    
+
     def formatPath(self, path):
-        if path in [' ', '', '/', '//']: return '/'
+        if path in [' ', '', '/', '//']:
+            return '/'
 
         return path.replace('//', '/').rstrip('/')
 
@@ -49,7 +49,7 @@ class RoutePathFactory:
         return metadata.methodVersion \
             or metadata.controllerVersion \
             or self.config.getVersioning().defaultVersion
-        
+
     def getVersionPrefix(self):
         pass
 

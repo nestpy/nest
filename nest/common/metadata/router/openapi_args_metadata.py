@@ -8,6 +8,7 @@ from typing import (
     List
 )
 
+
 class OpenapiArgs(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 

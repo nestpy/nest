@@ -1,8 +1,10 @@
 from pydantic import BaseModel, ConfigDict
 
+
 class RouteArgs(BaseModel):
     path: str
-    status_code: int #TODO: Change to HttpStatus enum
+    # TODO: Change to HttpStatus enum
+    status_code: int
 
     model_config = ConfigDict(
         arbitrary_types_allowed=True,

@@ -24,28 +24,28 @@ class ApplicationConfig:
         self.versioning: Union[bool, VersioningOptions] = versioning
 
     def getCors(self):
-        if(self._isTrueBoolProperty(self.cors)):
+        if (self._isTrueBoolProperty(self.cors)):
             return CorsOptions()
 
         return self.cors
 
     def getDocs(self):
-        if(self._isTrueBoolProperty(self.docs)):
+        if (self._isTrueBoolProperty(self.docs)):
             return DocsOptions()
 
         return self.docs
 
     def getGlobalPrefix(self):
-        if(self._isTrueBoolProperty(self.globalPrefix)):
+        if (self._isTrueBoolProperty(self.globalPrefix)):
             return GlobalPrefixOptions()
 
         return self.globalPrefix
-    
+
     def setGlobalPrefix(self, prefix: str, exclude: List[str] = []):
         self.globalPrefix = GlobalPrefixOptions(prefix, exclude)
 
     def getVersioning(self):
-        if(self._isTrueBoolProperty(self.versioning)):
+        if (self._isTrueBoolProperty(self.versioning)):
             return VersioningOptions()
 
         return self.versioning
