@@ -16,7 +16,7 @@ class TestVersioning:
         config = ApplicationConfig(versioning=True)
         app = NestApplication(app_module, config)
 
-        assert config_expect.__eq__(app.config.versioning)
+        assert config_expect.__eq__(app.config.getVersioning())
 
     def test_ShouldConfigOptions_WhenUseEnableVersioningMethod(self):
         @Module()

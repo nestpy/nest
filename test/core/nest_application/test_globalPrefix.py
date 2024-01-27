@@ -15,7 +15,7 @@ class TestGlobalPrefix:
         config = ApplicationConfig(globalPrefix=True)
         app = NestApplication(app_module, config)
 
-        assert config_expect.__eq__(app.config.globalPrefix)
+        assert config_expect.__eq__(app.config.getGlobalPrefix())
 
     def test_ShouldConfigOptions_WhenUseSetGlobalPrefixMethod(self):
         @Module()
@@ -33,5 +33,5 @@ class TestGlobalPrefix:
             exclude=exclude_expect
         )
 
-        assert app.config.globalPrefix.prefix == prefix_expect
-        assert app.config.globalPrefix.exclude == exclude_expect
+        assert app.config.getGlobalPrefix().prefix == prefix_expect
+        assert app.config.getGlobalPrefix().exclude == exclude_expect

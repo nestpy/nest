@@ -15,7 +15,7 @@ class TestCors:
         config = ApplicationConfig(cors=True)
         app = NestApplication(app_module, config)
 
-        assert config_expect.__eq__(app.config.cors)
+        assert config_expect.__eq__(app.config.getCors())
 
     def test_ShouldException_WhenInstanceWithCorsNotBool(self):
         pass
@@ -38,4 +38,4 @@ class TestCors:
 
         app.enableCors(config_expect)
 
-        assert config_expect.__eq__(app.config.cors)
+        assert config_expect.__eq__(app.config.getCors())
