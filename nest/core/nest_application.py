@@ -20,7 +20,8 @@ class NestApplication(INestApplication):
     def __init__(self, appModule: Any, config: ApplicationConfig):
         self.nest = FastAPI()
         self.appModule = appModule()
-        self.config = config # TODO: Change to private readonly
+        # TODO: Change to private readonly
+        self.config = config
 
     def _setup(self) -> None:
         self._setupDocs()
