@@ -54,7 +54,7 @@ class RoutePathFactory:
         pass
 
     def isExcludedFromGlobalPrefix(self, controllerPath: str):
-        options = self.config.globalPrefix
+        options = self.config.getGlobalPrefix()
         excludedRoutes = options.exclude
 
         return controllerPath in excludedRoutes

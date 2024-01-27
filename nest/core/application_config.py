@@ -42,7 +42,10 @@ class ApplicationConfig:
         return self.globalPrefix
 
     def setGlobalPrefix(self, prefix: str, exclude: List[str] = []):
-        self.globalPrefix = GlobalPrefixOptions(prefix, exclude)
+        self.globalPrefix = GlobalPrefixOptions(
+            prefix=prefix,
+            exclude=exclude
+        )
 
     def getVersioning(self):
         if (self._isTrueBoolProperty(self.versioning)):
