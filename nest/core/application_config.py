@@ -27,13 +27,13 @@ class ApplicationConfig:
         if(self._isTrueBoolProperty(self.cors)):
             return CorsOptions()
 
-        return self.globalPrefix
+        return self.cors
 
     def getDocs(self):
         if(self._isTrueBoolProperty(self.docs)):
             return DocsOptions()
 
-        return self.globalPrefix
+        return self.docs
 
     def getGlobalPrefix(self):
         if(self._isTrueBoolProperty(self.globalPrefix)):

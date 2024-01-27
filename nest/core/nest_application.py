@@ -21,31 +21,7 @@ class NestApplication(INestApplication):
         self.nest = FastAPI()
         self.appModule = appModule()
         self.config = config  # TODO: Change to private readonly
-
-        self._setConfig()
         
-
-    def _setConfig(self) -> None:
-        cors = self.config.cors
-        docs = self.config.docs
-        globalPrefix = self.config.globalPrefix
-        versioning = self.config.versioning
-
-        if type(cors == bool) and cors:
-            self.config.cors = CorsOptions()
-
-        if type(docs == bool) and docs:
-            self.config.docs = DocsOptions(type=DocsType.SWAGGER)
-
-        if type(globalPrefix == bool) and globalPrefix:
-            self.config.globalPrefix = GlobalPrefixOptions(
-                prefix="/api"
-            )
-
-        if type(versioning == bool) and versioning:
-            self.config.versioning = VersioningOptions(
-                type=VersioningType.URI
-            )
 
     def _setup(self) -> None:
         self._setupDocs()
@@ -53,7 +29,7 @@ class NestApplication(INestApplication):
         self._setupModule()
 
     def _setupCors(self) -> None:
-        cors = self.config.cors
+        cors = self.config.getCors()
 
         if not cors:
             return
@@ -72,8 +48,8 @@ class NestApplication(INestApplication):
         )
 
     def _setupDocs(self) -> None:
-        docs = self.config.docs
-
+        docs = self.config.getDocs()
+        
         if not docs:
             self.nest = FastAPI(docs_url=None, redoc_url=None)
             return
@@ -107,9 +83,6 @@ class NestApplication(INestApplication):
         self._setupController(controllers)
 
     def _setupController(self, controllers: List[Any]) -> None:
-        if not isinstance(self.config.globalPrefix, GlobalPrefixOptions):
-            raise ValueError("TODO")
-
         PathFactory = RoutePathFactory(self.config)
 
         for controller in controllers:
