@@ -12,7 +12,7 @@ start = ''
 
 [tool.poetry.dependencies]
 python = "^3.10"
-fastapi = "0.105.0"
+fastapi = "0.109.0"
 pydantic = "2.5.3"
 uvicorn = {extras = ["standard"], version = "0.25.0"}
 kink = "0.7.0"
