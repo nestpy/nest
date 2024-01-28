@@ -36,7 +36,7 @@ Nest provides an out-of-the-box application architecture which allows developers
 To get started with PyNest, you'll need to install it using pip:
 
 ```bash
-pip install pynest-api
+pip install nestpy-framework
 ```
 
 - To check out the [guide](https://docs.nestpy.org), visit [docs.nestpy.org](https://docs.nestpy.org). :books:
