@@ -1,4 +1,4 @@
-from nest.common.decorators import Controller, Get, HttpCode
+from nest.common.decorators import Controller, Get, HttpCode, Header
 
 
 @Controller("/")
@@ -8,5 +8,6 @@ class AppController:
 
     @Get("/")
     @HttpCode(202)
+    @Header("X-Cat-Dog", "custom value")
     def findAll(self):
         return {"Hello": "World"}

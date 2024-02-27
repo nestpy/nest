@@ -15,9 +15,9 @@ def bootstrap():
 
     app.enableCors(
         CorsOptions(
-            credentials=True,
-            origins=['http://localhost:3000'],
-            allow_methods=['GET']
+            origins=['http//localhost:3000'],
+            methods=['POST'],
+            allowedHeaders=['X-Cat-Dog'],
         )
     )
 

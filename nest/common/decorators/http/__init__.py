@@ -1,3 +1,4 @@
+from .header_decorator import Header as Header
 from .http_code_decorator import HttpCode as HttpCode
 from .request_method_decorator import Delete as Delete
 from .request_method_decorator import Get as Get

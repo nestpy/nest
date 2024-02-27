@@ -4,6 +4,7 @@ from .core import Version as Version
 from .http import Delete as Delete
 from .http import Get as Get
 from .http import Head as Head
+from .http import Header as Header
 from .http import HttpCode as HttpCode
 from .http import Options as Options
 from .http import Path as Path
