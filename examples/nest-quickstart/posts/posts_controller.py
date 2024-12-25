@@ -1,5 +1,4 @@
-from nest.common.decorators.core.controller import Controller
-from nest.common.decorators.http.request_mapping import Get, Post
+from nest.common import Controller, Get, Post
 
 from .posts_dto import CreatePostDto
 from .posts_service import PostService

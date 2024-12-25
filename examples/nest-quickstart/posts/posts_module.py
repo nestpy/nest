@@ -1,4 +1,4 @@
-from nest.common.decorators.core.module import Module
+from nest.common import Module
 
 from .posts_controller import PostController
 from .posts_service import PostService

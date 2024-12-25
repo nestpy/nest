@@ -1,6 +1,6 @@
 from typing import List
 
-from nest.common.decorators.core.injectable import Injectable
+from nest.common import Injectable
 
 from users.users_service import UserService
 from .posts_dto import CreatePostDto, PostModel

@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from nest.common.decorators.core.injectable import Injectable
+from nest.common import Injectable
 
 from .users_dto import User, CreateUserDto
 

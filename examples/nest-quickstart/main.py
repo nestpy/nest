@@ -1,5 +1,5 @@
-from nest.core.nest_factory import NestFactory
-from nest.common.enums.version_type import VersioningType
+from nest.core import NestFactory
+from nest.common import VersioningType
 
 from app_module import AppModule
 

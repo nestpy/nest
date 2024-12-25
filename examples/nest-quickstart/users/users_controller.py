@@ -1,9 +1,6 @@
 from http import HTTPStatus
 
-from nest.common.decorators.http.http_code import HttpCode
-from nest.common.decorators.http.request_mapping import Get, Post, Delete
-from nest.common.decorators.core.controller import Controller
-from nest.common.decorators.core.version import Version
+from nest.common import HttpCode, Get, Post, Delete, Controller, Version
 
 from fastapi import HTTPException
 

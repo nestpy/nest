@@ -9,7 +9,7 @@ import inspect
 import logging
 
 from .container import Container
-from ..common.interfaces.version_options import VersioningOptions, URIVersioningOptions
+from ..common import VersioningOptions, URIVersioningOptions
 
 
 class Application:
