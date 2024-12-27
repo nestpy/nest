@@ -143,23 +143,3 @@ class Application:
             )
         handler.__signature__ = inspect.signature(route_handler)
         return handler
-
-    async def init(self):
-        """
-        Inicializa la aplicación
-        """
-        pass
-
-    async def close(self):
-        """
-        Limpia recursos cuando la aplicación se cierra
-        """
-        if self._server:
-            await self._server.shutdown()
-
-    def get_http_adapter(self):
-        """
-        Retorna el adaptador HTTP (FastAPI en este caso)
-        """
-        return self.app
-
