@@ -1,4 +1,5 @@
 from nest.core import NestFactory
+from nest.core.application import Application
 from nest.common import VersioningType
 
 from app_module import AppModule

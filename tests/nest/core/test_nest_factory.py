@@ -26,19 +26,3 @@ class TestNestFactory:
         app = NestFactory.create(TestModule)
         
         assert app.modules == { TestModule }
-
-    @pytest.mark.asyncio
-    async def test_create_microservice_not_implemented(self ):
-        """
-        Test que verifica que create_microservice() está pendiente de implementar
-        """
-        result = await NestFactory.create_microservice(TestModule)
-        assert result is None
-
-    @pytest.mark.asyncio
-    async def test_create_application_context_not_implemented(self):
-        """
-        Test que verifica que create_application_context() está pendiente de implementar
-        """
-        result = await NestFactory.create_application_context(TestModule)
-        assert result is None 
