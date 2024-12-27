@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM python:3.10-slim
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
@@ -26,10 +26,7 @@ WORKDIR /app
 COPY pyproject.toml poetry.lock ./
 
 # Install dependencies
-RUN poetry install --no-root --no-interaction
+RUN poetry update && poetry install
 
 # Copy project files
 COPY . .
-
-# Install project
-RUN poetry install --no-interaction 
