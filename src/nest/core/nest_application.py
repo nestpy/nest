@@ -26,12 +26,13 @@ class NestApplication:
 
 
     def enable_cors(self, **options: CorsOptions) -> None: 
-        self.http_adapter.enable_cors(options)
+        print('app', options)
+        self.http_adapter.enable_cors(**options)
     
     def enable_versioning(self, **options: VersioningOptions) -> None: 
         self.config.enable_versioning(options)
 
-    def listen(self, **options: ServerOptions) -> None: 
+    def listen(self, **options: ServerOptions) -> None:
         self.http_adapter.register_routes(
             controllers=self.container.controllers,
             global_prefix=self.config.get_global_prefix(),

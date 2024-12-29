@@ -8,6 +8,15 @@ def bootstrap():
 
     app.set_global_prefix('/api')
 
+    app.enable_cors(
+        origin=["*"],
+        methods=["GET", "POST"],
+        allowedHeaders=["Content-Type"],
+        credentials=True,
+        exposedHeaders=["*"],
+        maxAge=3600
+    )
+    
     app.enable_versioning(
         type=VersioningType.URI,
         default_version="1",

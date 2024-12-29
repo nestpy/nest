@@ -15,15 +15,19 @@ from nest.core.schema import CorsOptions
 from nest.core.schema import ServerOptions
 from nest.common import VersioningOptions
 
+from nest.core.mapper.cors_mapper import map_cors_options
+
 class FastApiAdapter(HttpAdapter):
 
     def __init__(self):
-        self.app = FastAPI()
+        self.app = FastAPI(middleware=[])
 
     def enable_cors(self, **options: CorsOptions) -> None:
+        print('adapter', options)
         from fastapi.middleware.cors import CORSMiddleware
 
-        self.app.add_middleware(CORSMiddleware, **options)
+        fastapi_cors_options = map_cors_options(options)
+        self.app.add_middleware(CORSMiddleware, **fastapi_cors_options)
 
     def listen(self, **options: ServerOptions) -> None:
         import uvicorn
