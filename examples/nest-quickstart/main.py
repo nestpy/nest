@@ -1,5 +1,4 @@
 from nest.core import NestFactory
-from nest.core.application import Application
 from nest.common import VersioningType
 
 from app_module import AppModule
@@ -15,7 +14,7 @@ def bootstrap():
         prefix="v"
     )
 
-    app.listen(3000)
+    app.listen(port=3000, host="0.0.0.0")
 
 if __name__ == "__main__":
     bootstrap()
