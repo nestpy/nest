@@ -23,7 +23,6 @@ class FastApiAdapter(HttpAdapter):
         self.app = FastAPI(middleware=[])
 
     def enable_cors(self, **options: CorsOptions) -> None:
-        print('adapter', options)
         from fastapi.middleware.cors import CORSMiddleware
 
         fastapi_cors_options = map_cors_options(options)

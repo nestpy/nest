@@ -26,7 +26,6 @@ class NestApplication:
 
 
     def enable_cors(self, **options: CorsOptions) -> None: 
-        print('app', options)
         self.http_adapter.enable_cors(**options)
     
     def enable_versioning(self, **options: VersioningOptions) -> None: 
